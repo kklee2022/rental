@@ -61,7 +61,7 @@ jobs:
       - name: Run tests
         run: python manage.py test --verbosity 2
       - name: Verify Celery application
-        run: python -c "from config.celery import app; app.loader.import_default_modules(); assert 'core.tasks.record_worker_heartbeat' in app.tasks; assert 'rentals.tasks.release_expired_reservation_holds' in app.tasks"
+        run: python -c "from config.celery import app; app.loader.import_default_modules(); assert 'core.tasks.record_worker_heartbeat' in app.tasks; assert 'rentals.tasks.release_expired_reservation_holds' in app.tasks; assert 'data_imports.tasks.validate_import_batch_task' in app.tasks; assert 'data_imports.tasks.cleanup_expired_import_files' in app.tasks"
 
   container:
     runs-on: ubuntu-latest

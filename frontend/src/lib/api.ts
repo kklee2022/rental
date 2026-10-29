@@ -67,6 +67,54 @@ export function responseError(response: unknown): unknown {
   return (response as { error?: unknown } | null)?.error ?? null;
 }
 
+function authHeaders() {
+  const headers: Record<string, string> = {};
+  if (activeTenantSlug) headers["X-Tenant"] = activeTenantSlug;
+  if (authToken) headers.Authorization = `Token ${authToken}`;
+  return headers;
+}
+
+export async function apiUpload<T>(
+  path: string,
+  formData: FormData,
+): Promise<{ data: T | null; error: unknown }> {
+  try {
+    const response = await fetch(
+      new URL(path, window.location.origin).toString(),
+      {
+        method: "POST",
+        credentials: "include",
+        headers: authHeaders(),
+        body: formData,
+      },
+    );
+    const payload = await response.json();
+    if (!response.ok) return { data: null, error: payload };
+    return { data: payload as T, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
+}
+
+export async function downloadApiFile(path: string, filename: string) {
+  const response = await fetch(new URL(path, window.location.origin), {
+    credentials: "include",
+    headers: authHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(`Download failed (${response.status})`);
+  }
+  const blob = await response.blob();
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  URL.revokeObjectURL(url);
+}
+
 export async function apiMutation<T>(
   path: string,
   options: {
@@ -77,9 +125,8 @@ export async function apiMutation<T>(
   const method = options.method ?? "POST";
   const headers: Record<string, string> = {
     Accept: "application/json",
+    ...authHeaders(),
   };
-  if (activeTenantSlug) headers["X-Tenant"] = activeTenantSlug;
-  if (authToken) headers.Authorization = `Token ${authToken}`;
   if (csrfToken) headers["X-CSRFToken"] = csrfToken;
   if (options.body !== undefined) headers["Content-Type"] = "application/json";
 

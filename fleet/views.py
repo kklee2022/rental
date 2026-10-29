@@ -11,6 +11,7 @@ from tenants.permissions import HasTenantMembership
 from tenants.viewsets import AuditedTenantModelViewSet
 
 from .models import (
+    Accessory,
     Asset,
     AssetStatusEvent,
     EquipmentCategory,
@@ -20,6 +21,7 @@ from .models import (
 )
 from rentals.models import ReservationAllocation
 from .serializers import (
+    AccessorySerializer,
     AssetSerializer,
     AssetStatusEventSerializer,
     AssetTransitionSerializer,
@@ -91,6 +93,13 @@ class MeterReadingViewSet(FleetWriteViewSet):
         from core.models import record_audit
 
         record_audit("meterreading.created", actor=self.request.user, obj=reading)
+
+
+class AccessoryViewSet(FleetWriteViewSet):
+    queryset_model = Accessory
+    queryset_select_related = ("location",)
+    queryset_prefetch_related = ("compatible_models",)
+    serializer_class = AccessorySerializer
 
 
 @extend_schema(responses=FleetReportSerializer)

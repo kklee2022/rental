@@ -2,6 +2,7 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from .views import (
+    AccessoryViewSet,
     AssetViewSet,
     EquipmentCategoryViewSet,
     EquipmentModelViewSet,
@@ -18,6 +19,7 @@ router.register("locations", LocationViewSet, basename="location")
 router.register("equipment-models", EquipmentModelViewSet, basename="equipment-model")
 router.register("assets", AssetViewSet, basename="asset")
 router.register("meter-readings", MeterReadingViewSet, basename="meter-reading")
+router.register("accessories", AccessoryViewSet, basename="accessory")
 
 urlpatterns = [
     path("reports/fleet/", FleetReportView.as_view(), name="fleet-report"),

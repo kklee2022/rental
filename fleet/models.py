@@ -400,3 +400,48 @@ class MeterReading(AppendOnlyTenantModel):
             )
             self.asset = asset
             return super().save(*args, **kwargs)
+
+
+class Accessory(TenantScopedModel):
+    class Status(models.TextChoices):
+        AVAILABLE = "available", "Available"
+        IN_USE = "in_use", "In use"
+        MAINTENANCE = "maintenance", "Maintenance"
+        RETIRED = "retired", "Retired"
+
+    code = models.CharField(max_length=80)
+    name = models.CharField(max_length=180)
+    accessory_type = models.CharField(max_length=80, blank=True)
+    serial_number = models.CharField(max_length=120, blank=True)
+    location = models.ForeignKey(
+        Location,
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="accessories",
+    )
+    compatible_models = models.ManyToManyField(
+        EquipmentModel, blank=True, related_name="compatible_accessories"
+    )
+    status = models.CharField(
+        max_length=20, choices=Status.choices, default=Status.AVAILABLE
+    )
+    notes = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["code", "id"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["tenant", "code"], name="unique_accessory_code"
+            ),
+            models.UniqueConstraint(
+                fields=["tenant", "serial_number"],
+                condition=~models.Q(serial_number=""),
+                name="unique_accessory_serial",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.code} - {self.name}"

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import (
+    Accessory,
     Asset,
     AssetStatusEvent,
     EquipmentCategory,
@@ -121,6 +122,35 @@ class MeterReadingSerializer(serializers.ModelSerializer):
             "created_at",
         )
         read_only_fields = ("actor", "actor_username", "created_at")
+
+
+class AccessorySerializer(serializers.ModelSerializer):
+    location_name = serializers.CharField(source="location.name", read_only=True)
+    compatible_model_codes = serializers.SlugRelatedField(
+        source="compatible_models",
+        slug_field="code",
+        many=True,
+        read_only=True,
+    )
+
+    class Meta:
+        model = Accessory
+        fields = (
+            "id",
+            "code",
+            "name",
+            "accessory_type",
+            "serial_number",
+            "location",
+            "location_name",
+            "compatible_models",
+            "compatible_model_codes",
+            "status",
+            "notes",
+            "created_at",
+            "updated_at",
+        )
+        read_only_fields = ("created_at", "updated_at")
 
 
 class FleetReportSerializer(serializers.Serializer):

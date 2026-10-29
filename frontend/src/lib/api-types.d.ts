@@ -4,6 +4,44 @@
  */
 
 export interface paths {
+    "/api/v1/accessories/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Tenant-bound CRUD with role checks and generic audit events. */
+        get: operations["v1_accessories_list"];
+        put?: never;
+        /** @description Tenant-bound CRUD with role checks and generic audit events. */
+        post: operations["v1_accessories_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accessories/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Tenant-bound CRUD with role checks and generic audit events. */
+        get: operations["v1_accessories_retrieve"];
+        /** @description Tenant-bound CRUD with role checks and generic audit events. */
+        put: operations["v1_accessories_update"];
+        post?: never;
+        /** @description Tenant-bound CRUD with role checks and generic audit events. */
+        delete: operations["v1_accessories_destroy"];
+        options?: never;
+        head?: never;
+        /** @description Tenant-bound CRUD with role checks and generic audit events. */
+        patch: operations["v1_accessories_partial_update"];
+        trace?: never;
+    };
     "/api/v1/assets/": {
         parameters: {
             query?: never;
@@ -478,6 +516,182 @@ export interface paths {
         get: operations["v1_exports_accounting.csv_retrieve"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/import-mappings/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_import_mappings_list"];
+        put?: never;
+        post: operations["v1_import_mappings_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/import-mappings/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_import_mappings_retrieve"];
+        put: operations["v1_import_mappings_update"];
+        post?: never;
+        delete: operations["v1_import_mappings_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["v1_import_mappings_partial_update"];
+        trace?: never;
+    };
+    "/api/v1/import-rows/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_import_rows_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/import-rows/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_import_rows_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/import-templates/{import_type}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_import_templates_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/imports/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_imports_list"];
+        put?: never;
+        post: operations["v1_imports_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/imports/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_imports_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/imports/{id}/cancel/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1_imports_cancel_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/imports/{id}/commit/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1_imports_commit_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/imports/{id}/error-report/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_imports_error_report_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/imports/{id}/undo/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1_imports_undo_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1299,6 +1513,41 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        Accessory: {
+            readonly id: number;
+            code: string;
+            name: string;
+            accessory_type?: string;
+            serial_number?: string;
+            location?: number | null;
+            readonly location_name: string;
+            compatible_models?: number[];
+            readonly compatible_model_codes: string[];
+            status?: components["schemas"]["AccessoryStatusEnum"];
+            notes?: string;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        AccessoryRequest: {
+            code: string;
+            name: string;
+            accessory_type?: string;
+            serial_number?: string;
+            location?: number | null;
+            compatible_models?: number[];
+            status?: components["schemas"]["AccessoryStatusEnum"];
+            notes?: string;
+        };
+        /**
+         * @description * `available` - Available
+         *     * `in_use` - In use
+         *     * `maintenance` - Maintenance
+         *     * `retired` - Retired
+         * @enum {string}
+         */
+        AccessoryStatusEnum: "available" | "in_use" | "maintenance" | "retired";
         AccountResponse: {
             username: string;
             tenants: components["schemas"]["AccountTenantItem"][];
@@ -1317,6 +1566,14 @@ export interface components {
             status: string;
             membership: components["schemas"]["AccountTenant"];
         };
+        /**
+         * @description * `create` - Create
+         *     * `update` - Update
+         *     * `skip` - Skip
+         *     * `error` - Error
+         * @enum {string}
+         */
+        ActionEnum: "create" | "update" | "skip" | "error";
         Asset: {
             readonly id: number;
             model: number;
@@ -1608,6 +1865,13 @@ export interface components {
          * @enum {string}
          */
         DepositStatusEnum: "held" | "applied" | "refunded" | "forfeited";
+        /**
+         * @description * `error` - Reject duplicate
+         *     * `update` - Update existing
+         *     * `skip` - Skip existing
+         * @enum {string}
+         */
+        DuplicatePolicyEnum: "error" | "update" | "skip";
         EquipmentCategory: {
             readonly id: number;
             code: string;
@@ -1650,6 +1914,108 @@ export interface components {
             status_counts: {
                 [key: string]: number;
             };
+        };
+        ImportBatch: {
+            readonly id: number;
+            readonly import_type: components["schemas"]["ImportTypeEnum"];
+            readonly import_type_label: string;
+            readonly status: components["schemas"]["ImportBatchStatusEnum"];
+            readonly status_label: string;
+            readonly duplicate_policy: components["schemas"]["DuplicatePolicyEnum"];
+            readonly duplicate_policy_label: string;
+            readonly original_filename: string;
+            readonly file_size: number;
+            readonly content_sha256: string;
+            readonly mapping_name: string;
+            readonly total_rows: number;
+            readonly valid_rows: number;
+            readonly warning_rows: number;
+            readonly error_rows: number;
+            readonly created_rows: number;
+            readonly updated_rows: number;
+            readonly skipped_rows: number;
+            readonly summary: unknown;
+            readonly failure_message: string;
+            readonly uploaded_by: number | null;
+            readonly uploaded_by_username: string;
+            /** Format: date-time */
+            readonly validated_at: string | null;
+            readonly committed_by: number | null;
+            readonly committed_by_username: string;
+            /** Format: date-time */
+            readonly committed_at: string | null;
+            /** Format: date-time */
+            readonly file_expires_at: string;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+            readonly can_commit: boolean;
+            readonly can_undo: boolean;
+        };
+        /**
+         * @description * `uploaded` - Uploaded
+         *     * `validating` - Validating
+         *     * `preview_ready` - Preview ready
+         *     * `committing` - Committing
+         *     * `completed` - Completed
+         *     * `failed` - Failed
+         *     * `cancelled` - Cancelled
+         *     * `undone` - Undone
+         * @enum {string}
+         */
+        ImportBatchStatusEnum: "uploaded" | "validating" | "preview_ready" | "committing" | "completed" | "failed" | "cancelled" | "undone";
+        ImportMapping: {
+            readonly id: number;
+            import_type: components["schemas"]["ImportTypeEnum"];
+            name: string;
+            column_mapping?: unknown;
+            is_default?: boolean;
+            readonly created_by: number | null;
+            readonly created_by_username: string;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        ImportMappingRequest: {
+            import_type: components["schemas"]["ImportTypeEnum"];
+            name: string;
+            column_mapping?: unknown;
+            is_default?: boolean;
+        };
+        ImportRow: {
+            readonly id: number;
+            readonly batch: number;
+            readonly row_number: number;
+            readonly raw_data: unknown;
+            readonly normalized_data: unknown;
+            readonly validation_errors: unknown;
+            readonly warnings: unknown;
+            readonly action: components["schemas"]["ActionEnum"];
+            readonly action_label: string;
+            readonly object_type: string;
+            readonly object_id: string;
+            /** Format: date-time */
+            readonly created_at: string;
+        };
+        /**
+         * @description * `location` - Locations
+         *     * `equipment_model` - Equipment models
+         *     * `asset` - Assets
+         *     * `accessory` - Accessories
+         *     * `meter_reading` - Opening meter readings
+         * @enum {string}
+         */
+        ImportTypeEnum: "location" | "equipment_model" | "asset" | "accessory" | "meter_reading";
+        ImportUploadRequest: {
+            /** Format: binary */
+            file: string;
+            import_type: components["schemas"]["ImportTypeEnum"];
+            /** @default error */
+            duplicate_policy: components["schemas"]["DuplicatePolicyEnum"];
+            column_mapping?: unknown;
+            mapping_name?: string;
         };
         Invoice: {
             readonly id: number;
@@ -1820,6 +2186,21 @@ export interface components {
          * @enum {string}
          */
         MeterSourceEnum: "manual" | "telematics" | "import";
+        PaginatedAccessoryList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Accessory"][];
+        };
         PaginatedAssetList: {
             /** @example 123 */
             count: number;
@@ -1969,6 +2350,51 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["EquipmentModel"][];
+        };
+        PaginatedImportBatchList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["ImportBatch"][];
+        };
+        PaginatedImportMappingList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["ImportMapping"][];
+        };
+        PaginatedImportRowList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["ImportRow"][];
         };
         PaginatedInvoiceList: {
             /** @example 123 */
@@ -2165,6 +2591,16 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["Site"][];
         };
+        PatchedAccessoryRequest: {
+            code?: string;
+            name?: string;
+            accessory_type?: string;
+            serial_number?: string;
+            location?: number | null;
+            compatible_models?: number[];
+            status?: components["schemas"]["AccessoryStatusEnum"];
+            notes?: string;
+        };
         PatchedAssetRequest: {
             model?: number;
             location?: number | null;
@@ -2217,6 +2653,12 @@ export interface components {
             model_number?: string;
             specifications?: unknown;
             is_active?: boolean;
+        };
+        PatchedImportMappingRequest: {
+            import_type?: components["schemas"]["ImportTypeEnum"];
+            name?: string;
+            column_mapping?: unknown;
+            is_default?: boolean;
         };
         PatchedLocationRequest: {
             code?: string;
@@ -2817,6 +3259,152 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    v1_accessories_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedAccessoryList"];
+                };
+            };
+        };
+    };
+    v1_accessories_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccessoryRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AccessoryRequest"];
+                "multipart/form-data": components["schemas"]["AccessoryRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Accessory"];
+                };
+            };
+        };
+    };
+    v1_accessories_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this accessory. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Accessory"];
+                };
+            };
+        };
+    };
+    v1_accessories_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this accessory. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccessoryRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AccessoryRequest"];
+                "multipart/form-data": components["schemas"]["AccessoryRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Accessory"];
+                };
+            };
+        };
+    };
+    v1_accessories_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this accessory. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    v1_accessories_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this accessory. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedAccessoryRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedAccessoryRequest"];
+                "multipart/form-data": components["schemas"]["PatchedAccessoryRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Accessory"];
+                };
+            };
+        };
+    };
     v1_assets_list: {
         parameters: {
             query?: {
@@ -3974,6 +4562,375 @@ export interface operations {
                 };
                 content: {
                     "text/csv": string;
+                };
+            };
+        };
+    };
+    v1_import_mappings_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedImportMappingList"];
+                };
+            };
+        };
+    };
+    v1_import_mappings_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImportMappingRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["ImportMappingRequest"];
+                "multipart/form-data": components["schemas"]["ImportMappingRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportMapping"];
+                };
+            };
+        };
+    };
+    v1_import_mappings_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this import mapping. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportMapping"];
+                };
+            };
+        };
+    };
+    v1_import_mappings_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this import mapping. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImportMappingRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["ImportMappingRequest"];
+                "multipart/form-data": components["schemas"]["ImportMappingRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportMapping"];
+                };
+            };
+        };
+    };
+    v1_import_mappings_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this import mapping. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    v1_import_mappings_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this import mapping. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedImportMappingRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedImportMappingRequest"];
+                "multipart/form-data": components["schemas"]["PatchedImportMappingRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportMapping"];
+                };
+            };
+        };
+    };
+    v1_import_rows_list: {
+        parameters: {
+            query?: {
+                /** @description Filter rows by import batch ID. */
+                batch?: number;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedImportRowList"];
+                };
+            };
+        };
+    };
+    v1_import_rows_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this import row. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportRow"];
+                };
+            };
+        };
+    };
+    v1_import_templates_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                import_type: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/octet-stream": string;
+                };
+            };
+        };
+    };
+    v1_imports_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedImportBatchList"];
+                };
+            };
+        };
+    };
+    v1_imports_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["ImportUploadRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["ImportUploadRequest"];
+            };
+        };
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportBatch"];
+                };
+            };
+        };
+    };
+    v1_imports_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this import batch. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportBatch"];
+                };
+            };
+        };
+    };
+    v1_imports_cancel_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this import batch. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportBatch"];
+                };
+            };
+        };
+    };
+    v1_imports_commit_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this import batch. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportBatch"];
+                };
+            };
+        };
+    };
+    v1_imports_error_report_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this import batch. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/csv": string;
+                };
+            };
+        };
+    };
+    v1_imports_undo_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this import batch. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportBatch"];
                 };
             };
         };

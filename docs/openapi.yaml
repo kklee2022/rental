@@ -5,6 +5,188 @@ info:
   description: Multi-tenant machinery rental operations API. Supply an active X-Tenant
     header for tenant-scoped endpoints.
 paths:
+  /api/v1/accessories/:
+    get:
+      operationId: v1_accessories_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAccessoryList'
+          description: ''
+    post:
+      operationId: v1_accessories_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessoryRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AccessoryRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AccessoryRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Accessory'
+          description: ''
+  /api/v1/accessories/{id}/:
+    get:
+      operationId: v1_accessories_retrieve
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this accessory.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Accessory'
+          description: ''
+    put:
+      operationId: v1_accessories_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this accessory.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessoryRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AccessoryRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AccessoryRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Accessory'
+          description: ''
+    patch:
+      operationId: v1_accessories_partial_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this accessory.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAccessoryRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAccessoryRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAccessoryRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Accessory'
+          description: ''
+    delete:
+      operationId: v1_accessories_destroy
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this accessory.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
   /api/v1/assets/:
     get:
       operationId: v1_assets_list
@@ -1420,6 +1602,449 @@ paths:
               schema:
                 type: string
                 format: binary
+          description: ''
+  /api/v1/import-mappings/:
+    get:
+      operationId: v1_import_mappings_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedImportMappingList'
+          description: ''
+    post:
+      operationId: v1_import_mappings_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportMappingRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ImportMappingRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ImportMappingRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportMapping'
+          description: ''
+  /api/v1/import-mappings/{id}/:
+    get:
+      operationId: v1_import_mappings_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this import mapping.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportMapping'
+          description: ''
+    put:
+      operationId: v1_import_mappings_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this import mapping.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportMappingRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ImportMappingRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ImportMappingRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportMapping'
+          description: ''
+    patch:
+      operationId: v1_import_mappings_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this import mapping.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedImportMappingRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedImportMappingRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedImportMappingRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportMapping'
+          description: ''
+    delete:
+      operationId: v1_import_mappings_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this import mapping.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/import-rows/:
+    get:
+      operationId: v1_import_rows_list
+      parameters:
+      - in: query
+        name: batch
+        schema:
+          type: integer
+        description: Filter rows by import batch ID.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedImportRowList'
+          description: ''
+  /api/v1/import-rows/{id}/:
+    get:
+      operationId: v1_import_rows_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this import row.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportRow'
+          description: ''
+  /api/v1/import-templates/{import_type}/:
+    get:
+      operationId: v1_import_templates_retrieve
+      parameters:
+      - in: path
+        name: import_type
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          description: ''
+  /api/v1/imports/:
+    get:
+      operationId: v1_imports_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedImportBatchList'
+          description: ''
+    post:
+      operationId: v1_imports_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ImportUploadRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ImportUploadRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportBatch'
+          description: ''
+  /api/v1/imports/{id}/:
+    get:
+      operationId: v1_imports_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this import batch.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportBatch'
+          description: ''
+  /api/v1/imports/{id}/cancel/:
+    post:
+      operationId: v1_imports_cancel_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this import batch.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportBatch'
+          description: ''
+  /api/v1/imports/{id}/commit/:
+    post:
+      operationId: v1_imports_commit_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this import batch.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportBatch'
+          description: ''
+  /api/v1/imports/{id}/error-report/:
+    get:
+      operationId: v1_imports_error_report_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this import batch.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+          description: ''
+  /api/v1/imports/{id}/undo/:
+    post:
+      operationId: v1_imports_undo_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this import batch.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportBatch'
           description: ''
   /api/v1/invoices/:
     get:
@@ -3856,6 +4481,102 @@ paths:
           description: ''
 components:
   schemas:
+    Accessory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        code:
+          type: string
+          maxLength: 80
+        name:
+          type: string
+          maxLength: 180
+        accessory_type:
+          type: string
+          maxLength: 80
+        serial_number:
+          type: string
+          maxLength: 120
+        location:
+          type: integer
+          nullable: true
+        location_name:
+          type: string
+          readOnly: true
+        compatible_models:
+          type: array
+          items:
+            type: integer
+        compatible_model_codes:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        status:
+          $ref: '#/components/schemas/AccessoryStatusEnum'
+        notes:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - code
+      - compatible_model_codes
+      - created_at
+      - id
+      - location_name
+      - name
+      - updated_at
+    AccessoryRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+          maxLength: 80
+        name:
+          type: string
+          minLength: 1
+          maxLength: 180
+        accessory_type:
+          type: string
+          maxLength: 80
+        serial_number:
+          type: string
+          maxLength: 120
+        location:
+          type: integer
+          nullable: true
+        compatible_models:
+          type: array
+          items:
+            type: integer
+        status:
+          $ref: '#/components/schemas/AccessoryStatusEnum'
+        notes:
+          type: string
+      required:
+      - code
+      - name
+    AccessoryStatusEnum:
+      enum:
+      - available
+      - in_use
+      - maintenance
+      - retired
+      type: string
+      description: |-
+        * `available` - Available
+        * `in_use` - In use
+        * `maintenance` - Maintenance
+        * `retired` - Retired
     AccountResponse:
       type: object
       properties:
@@ -3909,6 +4630,18 @@ components:
       - name
       - slug
       - status
+    ActionEnum:
+      enum:
+      - create
+      - update
+      - skip
+      - error
+      type: string
+      description: |-
+        * `create` - Create
+        * `update` - Update
+        * `skip` - Skip
+        * `error` - Error
     Asset:
       type: object
       properties:
@@ -4685,6 +5418,16 @@ components:
         * `applied` - Applied
         * `refunded` - Refunded
         * `forfeited` - Forfeited
+    DuplicatePolicyEnum:
+      enum:
+      - error
+      - update
+      - skip
+      type: string
+      description: |-
+        * `error` - Reject duplicate
+        * `update` - Update existing
+        * `skip` - Skip existing
     EquipmentCategory:
       type: object
       properties:
@@ -4806,6 +5549,300 @@ components:
       - total_assets
       - unavailable
       - utilization_percent
+    ImportBatch:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        import_type:
+          allOf:
+          - $ref: '#/components/schemas/ImportTypeEnum'
+          readOnly: true
+        import_type_label:
+          type: string
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ImportBatchStatusEnum'
+          readOnly: true
+        status_label:
+          type: string
+          readOnly: true
+        duplicate_policy:
+          allOf:
+          - $ref: '#/components/schemas/DuplicatePolicyEnum'
+          readOnly: true
+        duplicate_policy_label:
+          type: string
+          readOnly: true
+        original_filename:
+          type: string
+          readOnly: true
+        file_size:
+          type: integer
+          readOnly: true
+        content_sha256:
+          type: string
+          readOnly: true
+        mapping_name:
+          type: string
+          readOnly: true
+        total_rows:
+          type: integer
+          readOnly: true
+        valid_rows:
+          type: integer
+          readOnly: true
+        warning_rows:
+          type: integer
+          readOnly: true
+        error_rows:
+          type: integer
+          readOnly: true
+        created_rows:
+          type: integer
+          readOnly: true
+        updated_rows:
+          type: integer
+          readOnly: true
+        skipped_rows:
+          type: integer
+          readOnly: true
+        summary:
+          readOnly: true
+        failure_message:
+          type: string
+          readOnly: true
+        uploaded_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        uploaded_by_username:
+          type: string
+          readOnly: true
+        validated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        committed_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        committed_by_username:
+          type: string
+          readOnly: true
+        committed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        file_expires_at:
+          type: string
+          format: date-time
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        can_commit:
+          type: boolean
+          readOnly: true
+        can_undo:
+          type: boolean
+          readOnly: true
+      required:
+      - can_commit
+      - can_undo
+      - committed_at
+      - committed_by
+      - committed_by_username
+      - content_sha256
+      - created_at
+      - created_rows
+      - duplicate_policy
+      - duplicate_policy_label
+      - error_rows
+      - failure_message
+      - file_expires_at
+      - file_size
+      - id
+      - import_type
+      - import_type_label
+      - mapping_name
+      - original_filename
+      - skipped_rows
+      - status
+      - status_label
+      - summary
+      - total_rows
+      - updated_at
+      - updated_rows
+      - uploaded_by
+      - uploaded_by_username
+      - valid_rows
+      - validated_at
+      - warning_rows
+    ImportBatchStatusEnum:
+      enum:
+      - uploaded
+      - validating
+      - preview_ready
+      - committing
+      - completed
+      - failed
+      - cancelled
+      - undone
+      type: string
+      description: |-
+        * `uploaded` - Uploaded
+        * `validating` - Validating
+        * `preview_ready` - Preview ready
+        * `committing` - Committing
+        * `completed` - Completed
+        * `failed` - Failed
+        * `cancelled` - Cancelled
+        * `undone` - Undone
+    ImportMapping:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        import_type:
+          $ref: '#/components/schemas/ImportTypeEnum'
+        name:
+          type: string
+          maxLength: 120
+        column_mapping: {}
+        is_default:
+          type: boolean
+        created_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        created_by_username:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - created_by
+      - created_by_username
+      - id
+      - import_type
+      - name
+      - updated_at
+    ImportMappingRequest:
+      type: object
+      properties:
+        import_type:
+          $ref: '#/components/schemas/ImportTypeEnum'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        column_mapping: {}
+        is_default:
+          type: boolean
+      required:
+      - import_type
+      - name
+    ImportRow:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        batch:
+          type: integer
+          readOnly: true
+        row_number:
+          type: integer
+          readOnly: true
+        raw_data:
+          readOnly: true
+        normalized_data:
+          readOnly: true
+        validation_errors:
+          readOnly: true
+        warnings:
+          readOnly: true
+        action:
+          allOf:
+          - $ref: '#/components/schemas/ActionEnum'
+          readOnly: true
+        action_label:
+          type: string
+          readOnly: true
+        object_type:
+          type: string
+          readOnly: true
+        object_id:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - action
+      - action_label
+      - batch
+      - created_at
+      - id
+      - normalized_data
+      - object_id
+      - object_type
+      - raw_data
+      - row_number
+      - validation_errors
+      - warnings
+    ImportTypeEnum:
+      enum:
+      - location
+      - equipment_model
+      - asset
+      - accessory
+      - meter_reading
+      type: string
+      description: |-
+        * `location` - Locations
+        * `equipment_model` - Equipment models
+        * `asset` - Assets
+        * `accessory` - Accessories
+        * `meter_reading` - Opening meter readings
+    ImportUploadRequest:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+        import_type:
+          $ref: '#/components/schemas/ImportTypeEnum'
+        duplicate_policy:
+          allOf:
+          - $ref: '#/components/schemas/DuplicatePolicyEnum'
+          default: error
+        column_mapping: {}
+        mapping_name:
+          type: string
+          maxLength: 120
+      required:
+      - file
+      - import_type
     Invoice:
       type: object
       properties:
@@ -5234,6 +6271,29 @@ components:
         * `manual` - Manual
         * `telematics` - Telematics
         * `import` - Import
+    PaginatedAccessoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Accessory'
     PaginatedAssetList:
       type: object
       required:
@@ -5464,6 +6524,75 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EquipmentModel'
+    PaginatedImportBatchList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImportBatch'
+    PaginatedImportMappingList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImportMapping'
+    PaginatedImportRowList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImportRow'
     PaginatedInvoiceList:
       type: object
       required:
@@ -5763,6 +6892,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Site'
+    PatchedAccessoryRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+          maxLength: 80
+        name:
+          type: string
+          minLength: 1
+          maxLength: 180
+        accessory_type:
+          type: string
+          maxLength: 80
+        serial_number:
+          type: string
+          maxLength: 120
+        location:
+          type: integer
+          nullable: true
+        compatible_models:
+          type: array
+          items:
+            type: integer
+        status:
+          $ref: '#/components/schemas/AccessoryStatusEnum'
+        notes:
+          type: string
     PatchedAssetRequest:
       type: object
       properties:
@@ -5899,6 +7056,18 @@ components:
           maxLength: 120
         specifications: {}
         is_active:
+          type: boolean
+    PatchedImportMappingRequest:
+      type: object
+      properties:
+        import_type:
+          $ref: '#/components/schemas/ImportTypeEnum'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        column_mapping: {}
+        is_default:
           type: boolean
     PatchedLocationRequest:
       type: object

@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     "pricing",
     "rentals",
     "billing",
+    "data_imports",
 ]
 
 MIDDLEWARE = [

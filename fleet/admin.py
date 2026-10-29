@@ -3,6 +3,7 @@ from django.contrib import admin
 from tenants.admin_utils import TenantScopedAdminMixin
 
 from .models import (
+    Accessory,
     Asset,
     AssetStatusEvent,
     EquipmentCategory,
@@ -86,3 +87,10 @@ class MeterReadingAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
+
+@admin.register(Accessory)
+class AccessoryAdmin(TenantScopedAdminMixin, admin.ModelAdmin):
+    list_display = ("code", "name", "accessory_type", "status", "location")
+    list_filter = ("status", "accessory_type")
+    search_fields = ("code", "name", "serial_number")

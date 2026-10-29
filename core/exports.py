@@ -15,7 +15,7 @@ class _CsvBuffer:
         return value
 
 
-def _safe_csv_value(value):
+def safe_csv_value(value):
     if isinstance(value, str) and value.startswith(("=", "+", "-", "@", "\t", "\r")):
         return f"'{value}"
     return value
@@ -60,7 +60,7 @@ def tenant_csv_response(
         for obj in rows.iterator():
             yield writer.writerow(
                 [
-                    _safe_csv_value(
+                    safe_csv_value(
                         value(obj) if callable(value) else getattr(obj, value)
                     )
                     for _, value in columns

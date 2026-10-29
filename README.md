@@ -66,12 +66,17 @@ API 支援 session 及 DRF token authentication。除 `/api/v1/me/` 外，
 - `/api/v1/reports/fleet/`、`/api/v1/reports/rentals/`、
   `/api/v1/reports/billing/`
 - `/api/v1/exports/accounting.csv`
+- `/api/v1/imports/`、`/api/v1/import-rows/`
+- `/api/v1/import-templates/<type>/`
 
 完整業務流程、防撞規則及角色邊界見
 [`docs/PHASE2.md`](docs/PHASE2.md)。
 
 OpenAPI、token authentication、營運介面功能及 runtime proxy 設計見
 [`docs/OPENAPI_AND_UI.md`](docs/OPENAPI_AND_UI.md)。
+
+階段 2B 匯入格式、限制、撤銷規則及安全邊界見
+[`docs/PHASE2B.md`](docs/PHASE2B.md)。
 
 OpenAPI contract 保存在 `docs/openapi.yaml`。更新 API 後執行：
 
