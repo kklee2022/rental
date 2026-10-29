@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from rest_framework.authtoken.models import Token
 
 from core.context import reset_current_tenant, set_current_tenant
 
@@ -29,15 +30,25 @@ class TenantMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
+    def _authenticate_token(self, request):
+        if request.user.is_authenticated:
+            return
+        authorization = request.META.get("HTTP_AUTHORIZATION", "")
+        scheme, _, key = authorization.partition(" ")
+        if scheme.lower() != "token" or not key:
+            return
+        token = Token.objects.select_related("user").filter(key=key.strip()).first()
+        if token is not None and token.user.is_active:
+            request.user = token.user
+
     def __call__(self, request):
         request.tenant = None
         request.membership = None
 
-        if (
-            not request.path.startswith(API_PREFIX)
-            or request.path in TENANTLESS_API_PATHS
-            or not request.user.is_authenticated
-        ):
+        if not request.path.startswith(API_PREFIX):
+            return self.get_response(request)
+        self._authenticate_token(request)
+        if request.path in TENANTLESS_API_PATHS or not request.user.is_authenticated:
             return self.get_response(request)
 
         slug = request.META.get(TENANT_HEADER, "").strip()

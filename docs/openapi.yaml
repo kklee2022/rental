@@ -2374,6 +2374,831 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/logistics/attachments/:
+    get:
+      operationId: v1_logistics_attachments_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLogisticsAttachmentList'
+          description: ''
+    post:
+      operationId: v1_logistics_attachments_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LogisticsAttachmentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LogisticsAttachmentRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogisticsAttachmentRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogisticsAttachment'
+          description: ''
+  /api/v1/logistics/attachments/{id}/:
+    get:
+      operationId: v1_logistics_attachments_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this logistics attachment.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogisticsAttachment'
+          description: ''
+  /api/v1/logistics/attachments/{id}/download/:
+    get:
+      operationId: v1_logistics_attachments_download_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this logistics attachment.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          description: ''
+  /api/v1/logistics/delivery-receipts/:
+    get:
+      operationId: v1_logistics_delivery_receipts_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDeliveryReceiptList'
+          description: ''
+    post:
+      operationId: v1_logistics_delivery_receipts_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliveryReceiptRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DeliveryReceiptRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DeliveryReceiptRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryReceipt'
+          description: ''
+  /api/v1/logistics/delivery-receipts/{id}/:
+    get:
+      operationId: v1_logistics_delivery_receipts_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery receipt.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryReceipt'
+          description: ''
+  /api/v1/logistics/events/:
+    get:
+      operationId: v1_logistics_events_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAssetLogisticsEventList'
+          description: ''
+    post:
+      operationId: v1_logistics_events_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssetLogisticsEventCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AssetLogisticsEventCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AssetLogisticsEventCreateRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetLogisticsEvent'
+          description: ''
+  /api/v1/logistics/events/{id}/:
+    get:
+      operationId: v1_logistics_events_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this asset logistics event.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetLogisticsEvent'
+          description: ''
+  /api/v1/logistics/inventory-counts/:
+    get:
+      operationId: v1_logistics_inventory_counts_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedInventoryCountList'
+          description: ''
+    post:
+      operationId: v1_logistics_inventory_counts_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryCountCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/InventoryCountCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/InventoryCountCreateRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryCount'
+          description: ''
+  /api/v1/logistics/inventory-counts/{id}/:
+    get:
+      operationId: v1_logistics_inventory_counts_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this inventory count.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryCount'
+          description: ''
+  /api/v1/logistics/inventory-counts/{id}/cancel/:
+    post:
+      operationId: v1_logistics_inventory_counts_cancel_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this inventory count.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryCount'
+          description: ''
+  /api/v1/logistics/inventory-counts/{id}/complete/:
+    post:
+      operationId: v1_logistics_inventory_counts_complete_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this inventory count.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryCount'
+          description: ''
+  /api/v1/logistics/inventory-counts/{id}/scan/:
+    post:
+      operationId: v1_logistics_inventory_counts_scan_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this inventory count.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryScanRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/InventoryScanRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/InventoryScanRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryCount'
+          description: ''
+  /api/v1/logistics/jobs/:
+    get:
+      operationId: v1_logistics_jobs_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTransportJobList'
+          description: ''
+    post:
+      operationId: v1_logistics_jobs_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransportJobRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransportJobRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransportJobRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportJob'
+          description: ''
+  /api/v1/logistics/jobs/{id}/:
+    get:
+      operationId: v1_logistics_jobs_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this transport job.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportJob'
+          description: ''
+    put:
+      operationId: v1_logistics_jobs_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this transport job.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransportJobRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransportJobRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransportJobRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportJob'
+          description: ''
+    patch:
+      operationId: v1_logistics_jobs_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this transport job.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTransportJobRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTransportJobRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTransportJobRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportJob'
+          description: ''
+    delete:
+      operationId: v1_logistics_jobs_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this transport job.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/logistics/jobs/{id}/arrive/:
+    post:
+      operationId: v1_logistics_jobs_arrive_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this transport job.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportJob'
+          description: ''
+  /api/v1/logistics/jobs/{id}/cancel/:
+    post:
+      operationId: v1_logistics_jobs_cancel_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this transport job.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportJob'
+          description: ''
+  /api/v1/logistics/jobs/{id}/complete/:
+    post:
+      operationId: v1_logistics_jobs_complete_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this transport job.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportJob'
+          description: ''
+  /api/v1/logistics/jobs/{id}/deliver/:
+    post:
+      operationId: v1_logistics_jobs_deliver_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this transport job.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportJob'
+          description: ''
+  /api/v1/logistics/jobs/{id}/start/:
+    post:
+      operationId: v1_logistics_jobs_start_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this transport job.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransportJobActionRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportJob'
+          description: ''
+  /api/v1/logistics/summary/:
+    get:
+      operationId: v1_logistics_summary_retrieve
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MobileLogisticsSummary'
+          description: ''
   /api/v1/me/:
     get:
       operationId: v1_me_retrieve
@@ -4721,6 +5546,169 @@ components:
       - status
       - status_changed_at
       - updated_at
+    AssetLogisticsEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        job:
+          type: integer
+          readOnly: true
+          nullable: true
+        job_number:
+          type: string
+          readOnly: true
+        asset:
+          type: integer
+          readOnly: true
+        asset_number:
+          type: string
+          readOnly: true
+        model_name:
+          type: string
+          readOnly: true
+        event_type:
+          allOf:
+          - $ref: '#/components/schemas/LogisticsEventTypeEnum'
+          readOnly: true
+        from_location:
+          type: integer
+          readOnly: true
+          nullable: true
+        from_location_name:
+          type: string
+          readOnly: true
+        to_location:
+          type: integer
+          readOnly: true
+          nullable: true
+        to_location_name:
+          type: string
+          readOnly: true
+        site:
+          type: integer
+          readOnly: true
+          nullable: true
+        site_name:
+          type: string
+          readOnly: true
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          readOnly: true
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          readOnly: true
+          nullable: true
+        occurred_at:
+          type: string
+          format: date-time
+          readOnly: true
+        source:
+          allOf:
+          - $ref: '#/components/schemas/LogisticsEventSourceEnum'
+          readOnly: true
+        client_event_id:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+        actor:
+          type: integer
+          readOnly: true
+          nullable: true
+        actor_username:
+          type: string
+          readOnly: true
+        notes:
+          type: string
+          readOnly: true
+        metadata:
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - actor
+      - actor_username
+      - asset
+      - asset_number
+      - client_event_id
+      - created_at
+      - event_type
+      - from_location
+      - from_location_name
+      - id
+      - job
+      - job_number
+      - latitude
+      - longitude
+      - metadata
+      - model_name
+      - notes
+      - occurred_at
+      - site
+      - site_name
+      - source
+      - to_location
+      - to_location_name
+    AssetLogisticsEventCreateRequest:
+      type: object
+      properties:
+        job:
+          type: integer
+          nullable: true
+        asset_id:
+          type: integer
+          nullable: true
+        asset_identifier:
+          type: string
+          minLength: 1
+          maxLength: 120
+        event_type:
+          $ref: '#/components/schemas/LogisticsEventTypeEnum'
+        from_location:
+          type: integer
+          nullable: true
+        to_location:
+          type: integer
+          nullable: true
+        site:
+          type: integer
+          nullable: true
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        occurred_at:
+          type: string
+          format: date-time
+        source:
+          allOf:
+          - $ref: '#/components/schemas/LogisticsEventSourceEnum'
+          default: mobile
+        client_event_id:
+          type: string
+          format: uuid
+          nullable: true
+        notes:
+          type: string
+          default: ''
+        metadata: {}
+      required:
+      - event_type
     AssetRequest:
       type: object
       properties:
@@ -4851,6 +5839,18 @@ components:
           maxLength: 60
       required:
       - status
+    AttachmentCategoryEnum:
+      enum:
+      - photo
+      - document
+      - signature
+      - exception
+      type: string
+      description: |-
+        * `photo` - Photo
+        * `document` - Document
+        * `signature` - Signature
+        * `exception` - Exception
     AuditEvent:
       type: object
       properties:
@@ -5324,6 +6324,107 @@ components:
         * `active` - Active
         * `on_hold` - On hold
         * `blocked` - Blocked
+    DeliveryReceipt:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        job:
+          type: integer
+        job_number:
+          type: string
+          readOnly: true
+        signer_name:
+          type: string
+          maxLength: 160
+        signer_phone:
+          type: string
+          maxLength: 60
+        accepted:
+          type: boolean
+        rejection_reason:
+          type: string
+        signature_data:
+          type: string
+        signed_at:
+          type: string
+          format: date-time
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        client_event_id:
+          type: string
+          format: uuid
+          nullable: true
+        actor:
+          type: integer
+          readOnly: true
+          nullable: true
+        actor_username:
+          type: string
+          readOnly: true
+        notes:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - actor
+      - actor_username
+      - created_at
+      - id
+      - job
+      - job_number
+      - signer_name
+    DeliveryReceiptRequest:
+      type: object
+      properties:
+        job:
+          type: integer
+        signer_name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        signer_phone:
+          type: string
+          maxLength: 60
+        accepted:
+          type: boolean
+        rejection_reason:
+          type: string
+        signature_data:
+          type: string
+        signed_at:
+          type: string
+          format: date-time
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        client_event_id:
+          type: string
+          format: uuid
+          nullable: true
+        notes:
+          type: string
+      required:
+      - job
+      - signer_name
     Deposit:
       type: object
       properties:
@@ -5843,6 +6944,186 @@ components:
       required:
       - file
       - import_type
+    InventoryCount:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        number:
+          type: string
+          readOnly: true
+        location:
+          type: integer
+          readOnly: true
+        location_name:
+          type: string
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/InventoryCountStatusEnum'
+          readOnly: true
+        expected_assets:
+          type: integer
+          readOnly: true
+        found_assets:
+          type: integer
+          readOnly: true
+        missing_assets:
+          type: integer
+          readOnly: true
+        unexpected_assets:
+          type: integer
+          readOnly: true
+        started_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        started_by_username:
+          type: string
+          readOnly: true
+        started_at:
+          type: string
+          format: date-time
+          readOnly: true
+        completed_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        completed_by_username:
+          type: string
+          readOnly: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        notes:
+          type: string
+          readOnly: true
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryCountLine'
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - completed_at
+      - completed_by
+      - completed_by_username
+      - created_at
+      - expected_assets
+      - found_assets
+      - id
+      - lines
+      - location
+      - location_name
+      - missing_assets
+      - notes
+      - number
+      - started_at
+      - started_by
+      - started_by_username
+      - status
+      - unexpected_assets
+      - updated_at
+    InventoryCountCreateRequest:
+      type: object
+      properties:
+        location:
+          type: integer
+          minimum: 1
+        notes:
+          type: string
+          default: ''
+      required:
+      - location
+    InventoryCountLine:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        asset:
+          type: integer
+          readOnly: true
+        asset_number:
+          type: string
+          readOnly: true
+        model_name:
+          type: string
+          readOnly: true
+        result:
+          allOf:
+          - $ref: '#/components/schemas/InventoryLineResultEnum'
+          readOnly: true
+        scanned_at:
+          type: string
+          format: date-time
+          readOnly: true
+        scanned_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        scanned_by_username:
+          type: string
+          readOnly: true
+        notes:
+          type: string
+          readOnly: true
+      required:
+      - asset
+      - asset_number
+      - id
+      - model_name
+      - notes
+      - result
+      - scanned_at
+      - scanned_by
+      - scanned_by_username
+    InventoryCountStatusEnum:
+      enum:
+      - in_progress
+      - completed
+      - cancelled
+      type: string
+      description: |-
+        * `in_progress` - In progress
+        * `completed` - Completed
+        * `cancelled` - Cancelled
+    InventoryLineResultEnum:
+      enum:
+      - found
+      - missing
+      - unexpected
+      type: string
+      description: |-
+        * `found` - Found
+        * `missing` - Missing
+        * `unexpected` - Unexpected
+    InventoryScanRequest:
+      type: object
+      properties:
+        asset_identifier:
+          type: string
+          minLength: 1
+          maxLength: 120
+        client_event_id:
+          type: string
+          format: uuid
+          nullable: true
+        notes:
+          type: string
+          default: ''
+      required:
+      - asset_identifier
     Invoice:
       type: object
       properties:
@@ -6160,6 +7441,142 @@ components:
       required:
       - detail
       - token
+    LogisticsAttachment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        job:
+          type: integer
+        job_number:
+          type: string
+          readOnly: true
+        event:
+          type: integer
+          nullable: true
+        asset:
+          type: integer
+          nullable: true
+        asset_number:
+          type: string
+          readOnly: true
+        category:
+          $ref: '#/components/schemas/AttachmentCategoryEnum'
+        file:
+          type: string
+          format: uri
+        original_filename:
+          type: string
+          readOnly: true
+        content_type:
+          type: string
+          readOnly: true
+        file_size:
+          type: integer
+          readOnly: true
+        captured_at:
+          type: string
+          format: date-time
+        client_event_id:
+          type: string
+          format: uuid
+          nullable: true
+        uploaded_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        uploaded_by_username:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - asset_number
+      - category
+      - content_type
+      - created_at
+      - file
+      - file_size
+      - id
+      - job
+      - job_number
+      - original_filename
+      - uploaded_by
+      - uploaded_by_username
+    LogisticsAttachmentRequest:
+      type: object
+      properties:
+        job:
+          type: integer
+        event:
+          type: integer
+          nullable: true
+        asset:
+          type: integer
+          nullable: true
+        category:
+          $ref: '#/components/schemas/AttachmentCategoryEnum'
+        file:
+          type: string
+          format: binary
+        captured_at:
+          type: string
+          format: date-time
+        client_event_id:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - category
+      - file
+      - job
+    LogisticsEventSourceEnum:
+      enum:
+      - manual
+      - mobile
+      - offline
+      - scan
+      type: string
+      description: |-
+        * `manual` - Manual
+        * `mobile` - Mobile
+        * `offline` - Offline sync
+        * `scan` - QR / barcode
+    LogisticsEventTypeEnum:
+      enum:
+      - scan
+      - prepare
+      - load
+      - depart
+      - arrive_site
+      - unload
+      - deliver
+      - collect_request
+      - collect
+      - receive_warehouse
+      - transfer
+      - inventory
+      - meter
+      - exception
+      type: string
+      description: |-
+        * `scan` - Scan
+        * `prepare` - Prepare
+        * `load` - Load
+        * `depart` - Depart
+        * `arrive_site` - Arrive at site
+        * `unload` - Unload
+        * `deliver` - Deliver
+        * `collect_request` - Request collection
+        * `collect` - Collect
+        * `receive_warehouse` - Receive into warehouse
+        * `transfer` - Transfer location
+        * `inventory` - Inventory scan
+        * `meter` - Meter update
+        * `exception` - Exception
     Membership:
       type: object
       properties:
@@ -6271,6 +7688,27 @@ components:
         * `manual` - Manual
         * `telematics` - Telematics
         * `import` - Import
+    MobileLogisticsSummary:
+      type: object
+      properties:
+        scheduled_jobs:
+          type: integer
+        active_jobs:
+          type: integer
+        awaiting_receipt:
+          type: integer
+        pending_collection:
+          type: integer
+        recent_events:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetLogisticsEvent'
+      required:
+      - active_jobs
+      - awaiting_receipt
+      - pending_collection
+      - recent_events
+      - scheduled_jobs
     PaginatedAccessoryList:
       type: object
       required:
@@ -6317,6 +7755,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Asset'
+    PaginatedAssetLogisticsEventList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetLogisticsEvent'
     PaginatedAssetStatusEventList:
       type: object
       required:
@@ -6455,6 +7916,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Customer'
+    PaginatedDeliveryReceiptList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryReceipt'
     PaginatedDepositList:
       type: object
       required:
@@ -6593,6 +8077,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ImportRow'
+    PaginatedInventoryCountList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryCount'
     PaginatedInvoiceList:
       type: object
       required:
@@ -6639,6 +8146,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Location'
+    PaginatedLogisticsAttachmentList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LogisticsAttachment'
     PaginatedMembershipList:
       type: object
       required:
@@ -6892,6 +8422,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Site'
+    PaginatedTransportJobList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransportJob'
     PatchedAccessoryRequest:
       type: object
       properties:
@@ -7322,6 +8875,56 @@ components:
           format: decimal
           pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
           nullable: true
+    PatchedTransportJobRequest:
+      type: object
+      properties:
+        direction:
+          $ref: '#/components/schemas/TransportDirectionEnum'
+        order:
+          type: integer
+          nullable: true
+        depot:
+          type: integer
+        destination_location:
+          type: integer
+          nullable: true
+        destination_site:
+          type: integer
+          nullable: true
+        driver:
+          type: integer
+          nullable: true
+        carrier_name:
+          type: string
+          maxLength: 160
+        vehicle:
+          type: string
+          maxLength: 120
+        transport_reference:
+          type: string
+          maxLength: 120
+        contact_name:
+          type: string
+          maxLength: 160
+        contact_phone:
+          type: string
+          maxLength: 60
+        scheduled_start:
+          type: string
+          format: date-time
+        scheduled_end:
+          type: string
+          format: date-time
+        delay_reason:
+          type: string
+        notes:
+          type: string
+        asset_ids:
+          type: array
+          items:
+            type: integer
+            minimum: 1
+          writeOnly: true
     Payment:
       type: object
       properties:
@@ -8572,6 +10175,268 @@ components:
       - code
       - customer
       - name
+    TransportDirectionEnum:
+      enum:
+      - outbound
+      - inbound
+      - transfer
+      type: string
+      description: |-
+        * `outbound` - Outbound delivery
+        * `inbound` - Inbound collection
+        * `transfer` - Warehouse transfer
+    TransportJob:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        number:
+          type: string
+          readOnly: true
+        direction:
+          $ref: '#/components/schemas/TransportDirectionEnum'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/TransportJobStatusEnum'
+          readOnly: true
+        order:
+          type: integer
+          nullable: true
+        order_number:
+          type: string
+          readOnly: true
+        depot:
+          type: integer
+        depot_name:
+          type: string
+          readOnly: true
+        destination_location:
+          type: integer
+          nullable: true
+        destination_location_name:
+          type: string
+          readOnly: true
+        destination_site:
+          type: integer
+          nullable: true
+        destination_site_name:
+          type: string
+          readOnly: true
+        destination_site_address:
+          type: string
+          readOnly: true
+        customer_name:
+          type: string
+          readOnly: true
+        driver:
+          type: integer
+          nullable: true
+        driver_username:
+          type: string
+          readOnly: true
+        carrier_name:
+          type: string
+          maxLength: 160
+        vehicle:
+          type: string
+          maxLength: 120
+        transport_reference:
+          type: string
+          maxLength: 120
+        contact_name:
+          type: string
+          maxLength: 160
+        contact_phone:
+          type: string
+          maxLength: 60
+        scheduled_start:
+          type: string
+          format: date-time
+        scheduled_end:
+          type: string
+          format: date-time
+        actual_start:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        actual_arrival:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        actual_delivery:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        delay_reason:
+          type: string
+        notes:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransportJobAsset'
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - actual_arrival
+      - actual_delivery
+      - actual_start
+      - completed_at
+      - created_at
+      - created_by
+      - customer_name
+      - depot
+      - depot_name
+      - destination_location_name
+      - destination_site_address
+      - destination_site_name
+      - direction
+      - driver_username
+      - id
+      - items
+      - number
+      - order_number
+      - scheduled_end
+      - scheduled_start
+      - status
+      - updated_at
+    TransportJobActionRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          default: ''
+    TransportJobAsset:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        asset:
+          type: integer
+          readOnly: true
+        asset_number:
+          type: string
+          readOnly: true
+        model_name:
+          type: string
+          readOnly: true
+        qr_code:
+          type: string
+          readOnly: true
+        asset_status:
+          type: string
+          readOnly: true
+        loaded_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        delivered_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+      required:
+      - asset
+      - asset_number
+      - asset_status
+      - delivered_at
+      - id
+      - loaded_at
+      - model_name
+      - qr_code
+    TransportJobRequest:
+      type: object
+      properties:
+        direction:
+          $ref: '#/components/schemas/TransportDirectionEnum'
+        order:
+          type: integer
+          nullable: true
+        depot:
+          type: integer
+        destination_location:
+          type: integer
+          nullable: true
+        destination_site:
+          type: integer
+          nullable: true
+        driver:
+          type: integer
+          nullable: true
+        carrier_name:
+          type: string
+          maxLength: 160
+        vehicle:
+          type: string
+          maxLength: 120
+        transport_reference:
+          type: string
+          maxLength: 120
+        contact_name:
+          type: string
+          maxLength: 160
+        contact_phone:
+          type: string
+          maxLength: 60
+        scheduled_start:
+          type: string
+          format: date-time
+        scheduled_end:
+          type: string
+          format: date-time
+        delay_reason:
+          type: string
+        notes:
+          type: string
+        asset_ids:
+          type: array
+          items:
+            type: integer
+            minimum: 1
+          writeOnly: true
+      required:
+      - depot
+      - direction
+      - scheduled_end
+      - scheduled_start
+    TransportJobStatusEnum:
+      enum:
+      - scheduled
+      - in_progress
+      - at_site
+      - delivered
+      - completed
+      - cancelled
+      type: string
+      description: |-
+        * `scheduled` - Scheduled
+        * `in_progress` - In progress
+        * `at_site` - At site
+        * `delivered` - Delivered
+        * `completed` - Completed
+        * `cancelled` - Cancelled
   securitySchemes:
     bearerAuth:
       type: http

@@ -22,6 +22,7 @@ RUN addgroup --system app && adduser --system --ingroup app app
 
 COPY --from=builder --chown=app:app /app/frontend/.next/standalone ./
 COPY --from=builder --chown=app:app /app/frontend/.next/static ./.next/static
+COPY --from=builder --chown=app:app /app/frontend/public ./public
 
 USER app
 EXPOSE 3000

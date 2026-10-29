@@ -112,6 +112,9 @@ const positiveStatuses = new Set([
   "available",
   "completed",
   "confirmed",
+  "delivered",
+  "found",
+  "in_progress",
   "paid",
   "ready_for_dispatch",
   "reserved",
@@ -127,6 +130,9 @@ const warningStatuses = new Set([
   "partially_paid",
   "pending_approval",
   "preparing",
+  "at_site",
+  "scheduled",
+  "unexpected",
   "return_inspection",
 ]);
 
@@ -134,6 +140,7 @@ const dangerStatuses = new Set([
   "blocked",
   "cancelled",
   "lost_write_off",
+  "missing",
   "overdue",
   "rejected",
   "safety_locked",

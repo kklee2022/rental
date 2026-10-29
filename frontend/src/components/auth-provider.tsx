@@ -97,7 +97,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!selectedSlug) {
       setCurrentTenant(null);
-      setActiveTenantSlug(null);
       return;
     }
     setActiveTenantSlug(selectedSlug);
@@ -105,9 +104,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       window.localStorage.setItem(TENANT_STORAGE_KEY, selectedSlug);
     }
     let cancelled = false;
-    void api.GET("/api/v1/tenant/").then((response) => {
-      if (!cancelled && !response.error) setCurrentTenant(response.data ?? null);
-    });
+    void api
+      .GET("/api/v1/tenant/", {
+        headers: { "X-Tenant": selectedSlug },
+      })
+      .then((response) => {
+        if (!cancelled && !response.error) setCurrentTenant(response.data ?? null);
+      });
     return () => {
       cancelled = true;
     };

@@ -17,6 +17,12 @@ from core.context import tenant_context
 from core.sequences import next_document_number
 from customers.models import Customer, Site
 from fleet.models import Asset, EquipmentCategory, EquipmentModel, Location
+from logistics.models import (
+    AssetLogisticsEvent,
+    TransportJob,
+    TransportJobAsset,
+)
+from logistics.services import record_asset_event
 from pricing.models import RateComponent, RatePlan
 from rentals.models import Quote, QuoteLine, RentalOrder
 from rentals.services import (
@@ -49,6 +55,11 @@ class Command(BaseCommand):
                 "features": ["asset_import", "customer_portal"],
             },
         )
+        features = set(plan.features)
+        features.update({"asset_import", "customer_portal", "mobile_logistics"})
+        if plan.features != sorted(features):
+            plan.features = sorted(features)
+            plan.save(update_fields=["features"])
         tenant, _ = Tenant.objects.get_or_create(
             slug="north-harbour",
             defaults={"name": "North Harbour Equipment", "plan": plan},
@@ -328,4 +339,66 @@ class Command(BaseCommand):
                 actor=owner,
                 amount=Decimal("5000"),
                 note="Demo damage deposit",
+            )
+
+        logistics_job, job_created = TransportJob.objects.get_or_create(
+            number="T-DEMO-0001",
+            defaults={
+                "direction": TransportJob.Direction.OUTBOUND,
+                "status": TransportJob.Status.IN_PROGRESS,
+                "order": active_order,
+                "depot": yard,
+                "destination_site": site,
+                "driver": owner,
+                "carrier_name": "North Harbour Transport",
+                "vehicle": "NHV-18",
+                "transport_reference": "DEL-DEMO-001",
+                "contact_name": site.contact_name,
+                "contact_phone": site.contact_phone,
+                "scheduled_start": now - timedelta(minutes=30),
+                "scheduled_end": now + timedelta(hours=2),
+                "actual_start": now - timedelta(minutes=20),
+                "created_by": owner,
+            },
+        )
+        TransportJobAsset.objects.get_or_create(job=logistics_job, asset=assets[0])
+        if job_created:
+            record_asset_event(
+                actor=owner,
+                event_type=AssetLogisticsEvent.Type.LOAD,
+                asset=assets[0],
+                job=logistics_job,
+                source=AssetLogisticsEvent.Source.SCAN,
+                occurred_at=now - timedelta(minutes=20),
+                notes="Loaded and sealed for Kai Tak Site 3B.",
+            )
+
+        collection_job, collection_created = TransportJob.objects.get_or_create(
+            number="T-DEMO-0002",
+            defaults={
+                "direction": TransportJob.Direction.INBOUND,
+                "status": TransportJob.Status.SCHEDULED,
+                "depot": yard,
+                "destination_site": site,
+                "driver": owner,
+                "carrier_name": "North Harbour Transport",
+                "vehicle": "NHV-22",
+                "transport_reference": "COL-DEMO-002",
+                "contact_name": site.contact_name,
+                "contact_phone": site.contact_phone,
+                "scheduled_start": now + timedelta(hours=4),
+                "scheduled_end": now + timedelta(hours=6),
+                "notes": "Confirm site access before departure.",
+                "created_by": owner,
+            },
+        )
+        TransportJobAsset.objects.get_or_create(job=collection_job, asset=assets[2])
+        if collection_created:
+            AssetLogisticsEvent.objects.create(
+                asset=assets[2],
+                job=collection_job,
+                event_type=AssetLogisticsEvent.Type.SCAN,
+                source=AssetLogisticsEvent.Source.SCAN,
+                actor=owner,
+                notes="Collection task prepared from the yard.",
             )

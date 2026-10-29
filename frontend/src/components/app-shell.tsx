@@ -10,6 +10,7 @@ import {
   LogOut,
   Menu,
   ReceiptText,
+  ScanLine,
   Truck,
   Users,
   X,
@@ -21,10 +22,21 @@ import { useEffect, useState, type ReactNode } from "react";
 import { useAuth } from "./auth-provider";
 import { Button } from "./ui";
 
-const navigation = [
+const navigation: Array<{
+  href: string;
+  label: string;
+  icon: typeof LayoutDashboard;
+  feature?: string;
+}> = [
   { href: "/", label: "總覽", icon: LayoutDashboard },
   { href: "/customers", label: "客戶", icon: Users },
   { href: "/fleet", label: "車隊", icon: Truck },
+  {
+    href: "/logistics",
+    label: "倉務物流",
+    icon: ScanLine,
+    feature: "mobile_logistics",
+  },
   { href: "/imports", label: "匯入", icon: FileUp },
   { href: "/quotes", label: "報價", icon: FileText },
   { href: "/orders", label: "租約", icon: ClipboardList },
@@ -35,6 +47,7 @@ const pageTitles: Record<string, string> = {
   "/": "營運總覽",
   "/customers": "客戶資料",
   "/fleet": "車隊與資產",
+  "/logistics": "倉務物流",
   "/imports": "資料匯入",
   "/quotes": "報價管理",
   "/orders": "租約調度",
@@ -76,6 +89,12 @@ export function AppShell({ children }: { children: ReactNode }) {
     Object.entries(pageTitles).find(
       ([path]) => path !== "/" && pathname.startsWith(path),
     )?.[1] ?? pageTitles["/"];
+  const visibleNavigation = navigation.filter(
+    (item) =>
+      !item.feature ||
+      currentTenant?.plan.features.includes(item.feature) ||
+      currentTenant === null,
+  );
 
   return (
     <div className="app-shell">
@@ -99,7 +118,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
 
         <nav className="sidebar__nav" aria-label="主要導覽">
-          {navigation.map((item) => {
+          {visibleNavigation.map((item) => {
             const active =
               item.href === "/"
                 ? pathname === "/"

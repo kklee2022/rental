@@ -8,6 +8,16 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "機械租賃 ERP",
   description: "機械租賃營運管理平台",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: "MR Field",
+    statusBarStyle: "black-translucent",
+  },
+  icons: {
+    icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

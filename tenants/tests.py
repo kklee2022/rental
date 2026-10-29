@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.test import TestCase
+from rest_framework.authtoken.models import Token
 from rest_framework.request import Request
 from rest_framework.test import APIRequestFactory
 
@@ -114,6 +115,22 @@ class MembershipApiTests(TestCase):
         self.assertEqual(response.json()["plan"]["max_users"], 2)
         self.assertEqual(response.json()["plan"]["features"], ["asset_import"])
         self.assertIn("X-Tenant", response["Vary"])
+
+    def test_token_auth_resolves_tenant_without_a_session_cookie(self):
+        self.client.logout()
+        token, _ = Token.objects.get_or_create(user=self.owner)
+        response = self.client.get(
+            "/api/v1/memberships/",
+            HTTP_AUTHORIZATION=f"Token {token.key}",
+            HTTP_X_TENANT=self.tenant_a.slug,
+        )
+        self.assertEqual(response.status_code, 200)
+        denied = self.client.get(
+            "/api/v1/memberships/",
+            HTTP_AUTHORIZATION=f"Token {token.key}",
+            HTTP_X_TENANT=self.tenant_b.slug,
+        )
+        self.assertEqual(denied.status_code, 403)
 
     def test_account_endpoint_lists_self_memberships_without_tenant_header(self):
         response = self.client.get("/api/v1/me/")

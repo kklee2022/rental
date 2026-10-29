@@ -67,9 +67,10 @@ export function responseError(response: unknown): unknown {
   return (response as { error?: unknown } | null)?.error ?? null;
 }
 
-function authHeaders() {
+function authHeaders(tenantSlug?: string | null) {
   const headers: Record<string, string> = {};
-  if (activeTenantSlug) headers["X-Tenant"] = activeTenantSlug;
+  const slug = tenantSlug ?? activeTenantSlug;
+  if (slug) headers["X-Tenant"] = slug;
   if (authToken) headers.Authorization = `Token ${authToken}`;
   return headers;
 }
@@ -77,6 +78,7 @@ function authHeaders() {
 export async function apiUpload<T>(
   path: string,
   formData: FormData,
+  tenantSlug?: string | null,
 ): Promise<{ data: T | null; error: unknown }> {
   try {
     const response = await fetch(
@@ -84,7 +86,7 @@ export async function apiUpload<T>(
       {
         method: "POST",
         credentials: "include",
-        headers: authHeaders(),
+        headers: authHeaders(tenantSlug),
         body: formData,
       },
     );
@@ -120,12 +122,13 @@ export async function apiMutation<T>(
   options: {
     method?: "POST" | "PATCH" | "DELETE";
     body?: unknown;
+    tenantSlug?: string | null;
   } = {},
 ): Promise<{ data: T | null; error: unknown }> {
   const method = options.method ?? "POST";
   const headers: Record<string, string> = {
     Accept: "application/json",
-    ...authHeaders(),
+    ...authHeaders(options.tenantSlug),
   };
   if (csrfToken) headers["X-CSRFToken"] = csrfToken;
   if (options.body !== undefined) headers["Content-Type"] = "application/json";
@@ -146,6 +149,12 @@ export async function apiMutation<T>(
       ? await response.json()
       : await response.text();
     if (!response.ok) {
+      if (!contentType.includes("application/json")) {
+        return {
+          data: null,
+          error: new Error(`Request failed (${response.status})`),
+        };
+      }
       return { data: null, error: payload };
     }
     return { data: payload as T, error: null };

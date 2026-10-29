@@ -816,6 +816,326 @@ export interface paths {
         patch: operations["v1_locations_partial_update"];
         trace?: never;
     };
+    "/api/v1/logistics/attachments/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_logistics_attachments_list"];
+        put?: never;
+        post: operations["v1_logistics_attachments_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/attachments/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_logistics_attachments_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/attachments/{id}/download/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_logistics_attachments_download_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/delivery-receipts/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_logistics_delivery_receipts_list"];
+        put?: never;
+        post: operations["v1_logistics_delivery_receipts_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/delivery-receipts/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_logistics_delivery_receipts_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/events/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_logistics_events_list"];
+        put?: never;
+        post: operations["v1_logistics_events_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/events/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_logistics_events_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/inventory-counts/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_logistics_inventory_counts_list"];
+        put?: never;
+        post: operations["v1_logistics_inventory_counts_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/inventory-counts/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_logistics_inventory_counts_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/inventory-counts/{id}/cancel/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1_logistics_inventory_counts_cancel_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/inventory-counts/{id}/complete/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1_logistics_inventory_counts_complete_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/inventory-counts/{id}/scan/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1_logistics_inventory_counts_scan_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/jobs/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_logistics_jobs_list"];
+        put?: never;
+        post: operations["v1_logistics_jobs_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/jobs/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_logistics_jobs_retrieve"];
+        put: operations["v1_logistics_jobs_update"];
+        post?: never;
+        delete: operations["v1_logistics_jobs_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["v1_logistics_jobs_partial_update"];
+        trace?: never;
+    };
+    "/api/v1/logistics/jobs/{id}/arrive/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1_logistics_jobs_arrive_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/jobs/{id}/cancel/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1_logistics_jobs_cancel_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/jobs/{id}/complete/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1_logistics_jobs_complete_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/jobs/{id}/deliver/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1_logistics_jobs_deliver_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/jobs/{id}/start/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1_logistics_jobs_start_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/logistics/summary/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_logistics_summary_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/me/": {
         parameters: {
             query?: never;
@@ -1602,6 +1922,58 @@ export interface components {
             /** Format: date-time */
             readonly updated_at: string;
         };
+        AssetLogisticsEvent: {
+            readonly id: number;
+            readonly job: number | null;
+            readonly job_number: string;
+            readonly asset: number;
+            readonly asset_number: string;
+            readonly model_name: string;
+            readonly event_type: components["schemas"]["LogisticsEventTypeEnum"];
+            readonly from_location: number | null;
+            readonly from_location_name: string;
+            readonly to_location: number | null;
+            readonly to_location_name: string;
+            readonly site: number | null;
+            readonly site_name: string;
+            /** Format: decimal */
+            readonly latitude: string | null;
+            /** Format: decimal */
+            readonly longitude: string | null;
+            /** Format: date-time */
+            readonly occurred_at: string;
+            readonly source: components["schemas"]["LogisticsEventSourceEnum"];
+            /** Format: uuid */
+            readonly client_event_id: string | null;
+            readonly actor: number | null;
+            readonly actor_username: string;
+            readonly notes: string;
+            readonly metadata: unknown;
+            /** Format: date-time */
+            readonly created_at: string;
+        };
+        AssetLogisticsEventCreateRequest: {
+            job?: number | null;
+            asset_id?: number | null;
+            asset_identifier?: string;
+            event_type: components["schemas"]["LogisticsEventTypeEnum"];
+            from_location?: number | null;
+            to_location?: number | null;
+            site?: number | null;
+            /** Format: decimal */
+            latitude?: string | null;
+            /** Format: decimal */
+            longitude?: string | null;
+            /** Format: date-time */
+            occurred_at?: string;
+            /** @default mobile */
+            source: components["schemas"]["LogisticsEventSourceEnum"];
+            /** Format: uuid */
+            client_event_id?: string | null;
+            /** @default  */
+            notes: string;
+            metadata?: unknown;
+        };
         AssetRequest: {
             model: number;
             location?: number | null;
@@ -1655,6 +2027,14 @@ export interface components {
             /** @default manual */
             source: string;
         };
+        /**
+         * @description * `photo` - Photo
+         *     * `document` - Document
+         *     * `signature` - Signature
+         *     * `exception` - Exception
+         * @enum {string}
+         */
+        AttachmentCategoryEnum: "photo" | "document" | "signature" | "exception";
         AuditEvent: {
             readonly id: number;
             readonly action: string;
@@ -1829,6 +2209,46 @@ export interface components {
          * @enum {string}
          */
         CustomerStatusEnum: "active" | "on_hold" | "blocked";
+        DeliveryReceipt: {
+            readonly id: number;
+            job: number;
+            readonly job_number: string;
+            signer_name: string;
+            signer_phone?: string;
+            accepted?: boolean;
+            rejection_reason?: string;
+            signature_data?: string;
+            /** Format: date-time */
+            signed_at?: string;
+            /** Format: decimal */
+            latitude?: string | null;
+            /** Format: decimal */
+            longitude?: string | null;
+            /** Format: uuid */
+            client_event_id?: string | null;
+            readonly actor: number | null;
+            readonly actor_username: string;
+            notes?: string;
+            /** Format: date-time */
+            readonly created_at: string;
+        };
+        DeliveryReceiptRequest: {
+            job: number;
+            signer_name: string;
+            signer_phone?: string;
+            accepted?: boolean;
+            rejection_reason?: string;
+            signature_data?: string;
+            /** Format: date-time */
+            signed_at?: string;
+            /** Format: decimal */
+            latitude?: string | null;
+            /** Format: decimal */
+            longitude?: string | null;
+            /** Format: uuid */
+            client_event_id?: string | null;
+            notes?: string;
+        };
         Deposit: {
             readonly id: number;
             readonly order: number;
@@ -2017,6 +2437,69 @@ export interface components {
             column_mapping?: unknown;
             mapping_name?: string;
         };
+        InventoryCount: {
+            readonly id: number;
+            readonly number: string;
+            readonly location: number;
+            readonly location_name: string;
+            readonly status: components["schemas"]["InventoryCountStatusEnum"];
+            readonly expected_assets: number;
+            readonly found_assets: number;
+            readonly missing_assets: number;
+            readonly unexpected_assets: number;
+            readonly started_by: number | null;
+            readonly started_by_username: string;
+            /** Format: date-time */
+            readonly started_at: string;
+            readonly completed_by: number | null;
+            readonly completed_by_username: string;
+            /** Format: date-time */
+            readonly completed_at: string | null;
+            readonly notes: string;
+            readonly lines: components["schemas"]["InventoryCountLine"][];
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        InventoryCountCreateRequest: {
+            location: number;
+            /** @default  */
+            notes: string;
+        };
+        InventoryCountLine: {
+            readonly id: number;
+            readonly asset: number;
+            readonly asset_number: string;
+            readonly model_name: string;
+            readonly result: components["schemas"]["InventoryLineResultEnum"];
+            /** Format: date-time */
+            readonly scanned_at: string;
+            readonly scanned_by: number | null;
+            readonly scanned_by_username: string;
+            readonly notes: string;
+        };
+        /**
+         * @description * `in_progress` - In progress
+         *     * `completed` - Completed
+         *     * `cancelled` - Cancelled
+         * @enum {string}
+         */
+        InventoryCountStatusEnum: "in_progress" | "completed" | "cancelled";
+        /**
+         * @description * `found` - Found
+         *     * `missing` - Missing
+         *     * `unexpected` - Unexpected
+         * @enum {string}
+         */
+        InventoryLineResultEnum: "found" | "missing" | "unexpected";
+        InventoryScanRequest: {
+            asset_identifier: string;
+            /** Format: uuid */
+            client_event_id?: string | null;
+            /** @default  */
+            notes: string;
+        };
         Invoice: {
             readonly id: number;
             readonly number: string;
@@ -2138,6 +2621,66 @@ export interface components {
             username?: string;
             token: string;
         };
+        LogisticsAttachment: {
+            readonly id: number;
+            job: number;
+            readonly job_number: string;
+            event?: number | null;
+            asset?: number | null;
+            readonly asset_number: string;
+            category: components["schemas"]["AttachmentCategoryEnum"];
+            /** Format: uri */
+            file: string;
+            readonly original_filename: string;
+            readonly content_type: string;
+            readonly file_size: number;
+            /** Format: date-time */
+            captured_at?: string;
+            /** Format: uuid */
+            client_event_id?: string | null;
+            readonly uploaded_by: number | null;
+            readonly uploaded_by_username: string;
+            /** Format: date-time */
+            readonly created_at: string;
+        };
+        LogisticsAttachmentRequest: {
+            job: number;
+            event?: number | null;
+            asset?: number | null;
+            category: components["schemas"]["AttachmentCategoryEnum"];
+            /** Format: binary */
+            file: string;
+            /** Format: date-time */
+            captured_at?: string;
+            /** Format: uuid */
+            client_event_id?: string | null;
+        };
+        /**
+         * @description * `manual` - Manual
+         *     * `mobile` - Mobile
+         *     * `offline` - Offline sync
+         *     * `scan` - QR / barcode
+         * @enum {string}
+         */
+        LogisticsEventSourceEnum: "manual" | "mobile" | "offline" | "scan";
+        /**
+         * @description * `scan` - Scan
+         *     * `prepare` - Prepare
+         *     * `load` - Load
+         *     * `depart` - Depart
+         *     * `arrive_site` - Arrive at site
+         *     * `unload` - Unload
+         *     * `deliver` - Deliver
+         *     * `collect_request` - Request collection
+         *     * `collect` - Collect
+         *     * `receive_warehouse` - Receive into warehouse
+         *     * `transfer` - Transfer location
+         *     * `inventory` - Inventory scan
+         *     * `meter` - Meter update
+         *     * `exception` - Exception
+         * @enum {string}
+         */
+        LogisticsEventTypeEnum: "scan" | "prepare" | "load" | "depart" | "arrive_site" | "unload" | "deliver" | "collect_request" | "collect" | "receive_warehouse" | "transfer" | "inventory" | "meter" | "exception";
         Membership: {
             readonly id: number;
             user_id: number;
@@ -2186,6 +2729,13 @@ export interface components {
          * @enum {string}
          */
         MeterSourceEnum: "manual" | "telematics" | "import";
+        MobileLogisticsSummary: {
+            scheduled_jobs: number;
+            active_jobs: number;
+            awaiting_receipt: number;
+            pending_collection: number;
+            recent_events: components["schemas"]["AssetLogisticsEvent"][];
+        };
         PaginatedAccessoryList: {
             /** @example 123 */
             count: number;
@@ -2215,6 +2765,21 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["Asset"][];
+        };
+        PaginatedAssetLogisticsEventList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["AssetLogisticsEvent"][];
         };
         PaginatedAssetStatusEventList: {
             /** @example 123 */
@@ -2306,6 +2871,21 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["Customer"][];
         };
+        PaginatedDeliveryReceiptList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["DeliveryReceipt"][];
+        };
         PaginatedDepositList: {
             /** @example 123 */
             count: number;
@@ -2396,6 +2976,21 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["ImportRow"][];
         };
+        PaginatedInventoryCountList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["InventoryCount"][];
+        };
         PaginatedInvoiceList: {
             /** @example 123 */
             count: number;
@@ -2425,6 +3020,21 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["Location"][];
+        };
+        PaginatedLogisticsAttachmentList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["LogisticsAttachment"][];
         };
         PaginatedMembershipList: {
             /** @example 123 */
@@ -2590,6 +3200,21 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["Site"][];
+        };
+        PaginatedTransportJobList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["TransportJob"][];
         };
         PatchedAccessoryRequest: {
             code?: string;
@@ -2771,6 +3396,26 @@ export interface components {
             latitude?: string | null;
             /** Format: decimal */
             longitude?: string | null;
+        };
+        PatchedTransportJobRequest: {
+            direction?: components["schemas"]["TransportDirectionEnum"];
+            order?: number | null;
+            depot?: number;
+            destination_location?: number | null;
+            destination_site?: number | null;
+            driver?: number | null;
+            carrier_name?: string;
+            vehicle?: string;
+            transport_reference?: string;
+            contact_name?: string;
+            contact_phone?: string;
+            /** Format: date-time */
+            scheduled_start?: string;
+            /** Format: date-time */
+            scheduled_end?: string;
+            delay_reason?: string;
+            notes?: string;
+            asset_ids?: number[];
         };
         Payment: {
             readonly id: number;
@@ -3250,6 +3895,102 @@ export interface components {
             /** Format: decimal */
             longitude?: string | null;
         };
+        /**
+         * @description * `outbound` - Outbound delivery
+         *     * `inbound` - Inbound collection
+         *     * `transfer` - Warehouse transfer
+         * @enum {string}
+         */
+        TransportDirectionEnum: "outbound" | "inbound" | "transfer";
+        TransportJob: {
+            readonly id: number;
+            readonly number: string;
+            direction: components["schemas"]["TransportDirectionEnum"];
+            readonly status: components["schemas"]["TransportJobStatusEnum"];
+            order?: number | null;
+            readonly order_number: string;
+            depot: number;
+            readonly depot_name: string;
+            destination_location?: number | null;
+            readonly destination_location_name: string;
+            destination_site?: number | null;
+            readonly destination_site_name: string;
+            readonly destination_site_address: string;
+            readonly customer_name: string;
+            driver?: number | null;
+            readonly driver_username: string;
+            carrier_name?: string;
+            vehicle?: string;
+            transport_reference?: string;
+            contact_name?: string;
+            contact_phone?: string;
+            /** Format: date-time */
+            scheduled_start: string;
+            /** Format: date-time */
+            scheduled_end: string;
+            /** Format: date-time */
+            readonly actual_start: string | null;
+            /** Format: date-time */
+            readonly actual_arrival: string | null;
+            /** Format: date-time */
+            readonly actual_delivery: string | null;
+            /** Format: date-time */
+            readonly completed_at: string | null;
+            delay_reason?: string;
+            notes?: string;
+            readonly items: components["schemas"]["TransportJobAsset"][];
+            readonly created_by: number | null;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        TransportJobActionRequest: {
+            /** @default  */
+            reason: string;
+        };
+        TransportJobAsset: {
+            readonly id: number;
+            readonly asset: number;
+            readonly asset_number: string;
+            readonly model_name: string;
+            readonly qr_code: string;
+            readonly asset_status: string;
+            /** Format: date-time */
+            readonly loaded_at: string | null;
+            /** Format: date-time */
+            readonly delivered_at: string | null;
+        };
+        TransportJobRequest: {
+            direction: components["schemas"]["TransportDirectionEnum"];
+            order?: number | null;
+            depot: number;
+            destination_location?: number | null;
+            destination_site?: number | null;
+            driver?: number | null;
+            carrier_name?: string;
+            vehicle?: string;
+            transport_reference?: string;
+            contact_name?: string;
+            contact_phone?: string;
+            /** Format: date-time */
+            scheduled_start: string;
+            /** Format: date-time */
+            scheduled_end: string;
+            delay_reason?: string;
+            notes?: string;
+            asset_ids?: number[];
+        };
+        /**
+         * @description * `scheduled` - Scheduled
+         *     * `in_progress` - In progress
+         *     * `at_site` - At site
+         *     * `delivered` - Delivered
+         *     * `completed` - Completed
+         *     * `cancelled` - Cancelled
+         * @enum {string}
+         */
+        TransportJobStatusEnum: "scheduled" | "in_progress" | "at_site" | "delivered" | "completed" | "cancelled";
     };
     responses: never;
     parameters: never;
@@ -5196,6 +5937,681 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Location"];
+                };
+            };
+        };
+    };
+    v1_logistics_attachments_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedLogisticsAttachmentList"];
+                };
+            };
+        };
+    };
+    v1_logistics_attachments_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["LogisticsAttachmentRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["LogisticsAttachmentRequest"];
+                "application/json": components["schemas"]["LogisticsAttachmentRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LogisticsAttachment"];
+                };
+            };
+        };
+    };
+    v1_logistics_attachments_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this logistics attachment. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LogisticsAttachment"];
+                };
+            };
+        };
+    };
+    v1_logistics_attachments_download_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this logistics attachment. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/octet-stream": string;
+                };
+            };
+        };
+    };
+    v1_logistics_delivery_receipts_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedDeliveryReceiptList"];
+                };
+            };
+        };
+    };
+    v1_logistics_delivery_receipts_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeliveryReceiptRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["DeliveryReceiptRequest"];
+                "multipart/form-data": components["schemas"]["DeliveryReceiptRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeliveryReceipt"];
+                };
+            };
+        };
+    };
+    v1_logistics_delivery_receipts_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this delivery receipt. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeliveryReceipt"];
+                };
+            };
+        };
+    };
+    v1_logistics_events_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedAssetLogisticsEventList"];
+                };
+            };
+        };
+    };
+    v1_logistics_events_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssetLogisticsEventCreateRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AssetLogisticsEventCreateRequest"];
+                "multipart/form-data": components["schemas"]["AssetLogisticsEventCreateRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssetLogisticsEvent"];
+                };
+            };
+        };
+    };
+    v1_logistics_events_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this asset logistics event. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssetLogisticsEvent"];
+                };
+            };
+        };
+    };
+    v1_logistics_inventory_counts_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedInventoryCountList"];
+                };
+            };
+        };
+    };
+    v1_logistics_inventory_counts_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InventoryCountCreateRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["InventoryCountCreateRequest"];
+                "multipart/form-data": components["schemas"]["InventoryCountCreateRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InventoryCount"];
+                };
+            };
+        };
+    };
+    v1_logistics_inventory_counts_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this inventory count. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InventoryCount"];
+                };
+            };
+        };
+    };
+    v1_logistics_inventory_counts_cancel_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this inventory count. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InventoryCount"];
+                };
+            };
+        };
+    };
+    v1_logistics_inventory_counts_complete_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this inventory count. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InventoryCount"];
+                };
+            };
+        };
+    };
+    v1_logistics_inventory_counts_scan_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this inventory count. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InventoryScanRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["InventoryScanRequest"];
+                "multipart/form-data": components["schemas"]["InventoryScanRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InventoryCount"];
+                };
+            };
+        };
+    };
+    v1_logistics_jobs_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedTransportJobList"];
+                };
+            };
+        };
+    };
+    v1_logistics_jobs_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TransportJobRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["TransportJobRequest"];
+                "multipart/form-data": components["schemas"]["TransportJobRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransportJob"];
+                };
+            };
+        };
+    };
+    v1_logistics_jobs_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this transport job. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransportJob"];
+                };
+            };
+        };
+    };
+    v1_logistics_jobs_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this transport job. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TransportJobRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["TransportJobRequest"];
+                "multipart/form-data": components["schemas"]["TransportJobRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransportJob"];
+                };
+            };
+        };
+    };
+    v1_logistics_jobs_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this transport job. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    v1_logistics_jobs_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this transport job. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedTransportJobRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedTransportJobRequest"];
+                "multipart/form-data": components["schemas"]["PatchedTransportJobRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransportJob"];
+                };
+            };
+        };
+    };
+    v1_logistics_jobs_arrive_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this transport job. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["TransportJobActionRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["TransportJobActionRequest"];
+                "multipart/form-data": components["schemas"]["TransportJobActionRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransportJob"];
+                };
+            };
+        };
+    };
+    v1_logistics_jobs_cancel_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this transport job. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["TransportJobActionRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["TransportJobActionRequest"];
+                "multipart/form-data": components["schemas"]["TransportJobActionRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransportJob"];
+                };
+            };
+        };
+    };
+    v1_logistics_jobs_complete_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this transport job. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["TransportJobActionRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["TransportJobActionRequest"];
+                "multipart/form-data": components["schemas"]["TransportJobActionRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransportJob"];
+                };
+            };
+        };
+    };
+    v1_logistics_jobs_deliver_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this transport job. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["TransportJobActionRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["TransportJobActionRequest"];
+                "multipart/form-data": components["schemas"]["TransportJobActionRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransportJob"];
+                };
+            };
+        };
+    };
+    v1_logistics_jobs_start_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this transport job. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["TransportJobActionRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["TransportJobActionRequest"];
+                "multipart/form-data": components["schemas"]["TransportJobActionRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransportJob"];
+                };
+            };
+        };
+    };
+    v1_logistics_summary_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MobileLogisticsSummary"];
                 };
             };
         };

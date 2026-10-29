@@ -31,6 +31,14 @@ export type ImportRow = Schemas["ImportRow"];
 export type BillingReport = Schemas["BillingReport"];
 export type FleetReport = Schemas["FleetReport"];
 export type RentalReport = Schemas["RentalReport"];
+export type TransportJob = Schemas["TransportJob"];
+export type TransportJobAsset = Schemas["TransportJobAsset"];
+export type AssetLogisticsEvent = Schemas["AssetLogisticsEvent"];
+export type DeliveryReceipt = Schemas["DeliveryReceipt"];
+export type InventoryCount = Schemas["InventoryCount"];
+export type InventoryCountLine = Schemas["InventoryCountLine"];
+export type LogisticsAttachment = Schemas["LogisticsAttachment"];
+export type MobileLogisticsSummary = Schemas["MobileLogisticsSummary"];
 
 export type Paginated<T> = {
   count: number;

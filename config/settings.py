@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     "rentals",
     "billing",
     "data_imports",
+    "logistics",
 ]
 
 MIDDLEWARE = [
@@ -156,6 +157,13 @@ SPECTACULAR_SETTINGS = {
         "RefundStatusEnum": "billing.models.Refund.Status",
         "CreditNoteStatusEnum": "billing.models.CreditNote.Status",
         "DepositStatusEnum": "billing.models.Deposit.Status",
+        "TransportDirectionEnum": "logistics.models.TransportJob.Direction",
+        "TransportJobStatusEnum": "logistics.models.TransportJob.Status",
+        "LogisticsEventTypeEnum": "logistics.models.AssetLogisticsEvent.Type",
+        "LogisticsEventSourceEnum": "logistics.models.AssetLogisticsEvent.Source",
+        "InventoryCountStatusEnum": "logistics.models.InventoryCount.Status",
+        "InventoryLineResultEnum": "logistics.models.InventoryCountLine.Result",
+        "AttachmentCategoryEnum": "logistics.models.LogisticsAttachment.Category",
     },
 }
 

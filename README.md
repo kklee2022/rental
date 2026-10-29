@@ -68,6 +68,9 @@ API 支援 session 及 DRF token authentication。除 `/api/v1/me/` 外，
 - `/api/v1/exports/accounting.csv`
 - `/api/v1/imports/`、`/api/v1/import-rows/`
 - `/api/v1/import-templates/<type>/`
+- `/api/v1/logistics/jobs/`、`/api/v1/logistics/events/`
+- `/api/v1/logistics/delivery-receipts/`、
+  `/api/v1/logistics/inventory-counts/`
 
 完整業務流程、防撞規則及角色邊界見
 [`docs/PHASE2.md`](docs/PHASE2.md)。
@@ -77,6 +80,10 @@ OpenAPI、token authentication、營運介面功能及 runtime proxy 設計見
 
 階段 2B 匯入格式、限制、撤銷規則及安全邊界見
 [`docs/PHASE2B.md`](docs/PHASE2B.md)。
+
+階段 3 手機倉務、掃碼、離線同步、電子交收及盤點見
+[`docs/PHASE3.md`](docs/PHASE3.md)。物流功能需要方案包含
+`mobile_logistics` feature。
 
 OpenAPI contract 保存在 `docs/openapi.yaml`。更新 API 後執行：
 
