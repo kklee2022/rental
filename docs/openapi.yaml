@@ -5103,6 +5103,54 @@ paths:
               schema:
                 $ref: '#/components/schemas/ReservationAllocation'
           description: ''
+  /api/v1/settings/:
+    get:
+      operationId: v1_settings_retrieve
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantSettings'
+          description: ''
+    patch:
+      operationId: v1_settings_partial_update
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTenantSettingsRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTenantSettingsRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTenantSettingsRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantSettings'
+          description: ''
   /api/v1/sites/:
     get:
       operationId: v1_sites_list
@@ -5304,6 +5352,176 @@ paths:
               schema:
                 $ref: '#/components/schemas/CurrentTenantResponse'
           description: ''
+  /api/v1/users/:
+    get:
+      operationId: v1_users_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTenantUserList'
+          description: ''
+    post:
+      operationId: v1_users_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TenantUserRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TenantUserRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TenantUserRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantUser'
+          description: ''
+  /api/v1/users/{id}/:
+    get:
+      operationId: v1_users_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantUser'
+          description: ''
+    put:
+      operationId: v1_users_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TenantUserRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TenantUserRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TenantUserRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantUser'
+          description: ''
+    patch:
+      operationId: v1_users_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTenantUserRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTenantUserRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTenantUserRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantUser'
+          description: ''
+    delete:
+      operationId: v1_users_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
 components:
   schemas:
     Accessory:
@@ -5486,7 +5704,6 @@ components:
           readOnly: true
         asset_number:
           type: string
-          maxLength: 80
         serial_number:
           type: string
           maxLength: 120
@@ -5536,7 +5753,6 @@ components:
           format: date-time
           readOnly: true
       required:
-      - asset_number
       - created_at
       - created_by
       - id
@@ -5719,8 +5935,6 @@ components:
           nullable: true
         asset_number:
           type: string
-          minLength: 1
-          maxLength: 80
         serial_number:
           type: string
           maxLength: 120
@@ -5750,7 +5964,6 @@ components:
         notes:
           type: string
       required:
-      - asset_number
       - model
     AssetStatusEnum:
       enum:
@@ -6272,7 +6485,6 @@ components:
           format: date-time
           readOnly: true
       required:
-      - code
       - created_at
       - id
       - name
@@ -6282,7 +6494,6 @@ components:
       properties:
         code:
           type: string
-          minLength: 1
           maxLength: 40
         name:
           type: string
@@ -6312,7 +6523,6 @@ components:
         notes:
           type: string
       required:
-      - code
       - name
     CustomerStatusEnum:
       enum:
@@ -6542,12 +6752,16 @@ components:
         name:
           type: string
           maxLength: 120
+        prefix:
+          type: string
+          maxLength: 12
         description:
           type: string
       required:
       - code
       - id
       - name
+      - prefix
     EquipmentCategoryRequest:
       type: object
       properties:
@@ -6560,11 +6774,16 @@ components:
           type: string
           minLength: 1
           maxLength: 120
+        prefix:
+          type: string
+          minLength: 1
+          maxLength: 12
         description:
           type: string
       required:
       - code
       - name
+      - prefix
     EquipmentModel:
       type: object
       properties:
@@ -8422,6 +8641,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Site'
+    PaginatedTenantUserList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TenantUser'
     PaginatedTransportJobList:
       type: object
       required:
@@ -8483,8 +8725,6 @@ components:
           nullable: true
         asset_number:
           type: string
-          minLength: 1
-          maxLength: 80
         serial_number:
           type: string
           maxLength: 120
@@ -8545,7 +8785,6 @@ components:
       properties:
         code:
           type: string
-          minLength: 1
           maxLength: 40
         name:
           type: string
@@ -8586,6 +8825,10 @@ components:
           type: string
           minLength: 1
           maxLength: 120
+        prefix:
+          type: string
+          minLength: 1
+          maxLength: 12
         description:
           type: string
     PatchedEquipmentModelRequest:
@@ -8875,6 +9118,52 @@ components:
           format: decimal
           pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
           nullable: true
+    PatchedTenantSettingsRequest:
+      type: object
+      properties:
+        company_name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        customer_prefix:
+          type: string
+          minLength: 1
+          maxLength: 12
+        invoice_prefix:
+          type: string
+          minLength: 1
+          maxLength: 12
+        rental_prefix:
+          type: string
+          minLength: 1
+          maxLength: 12
+        quote_prefix:
+          type: string
+          minLength: 1
+          maxLength: 12
+    PatchedTenantUserRequest:
+      type: object
+      properties:
+        existing_user_id:
+          type: integer
+          writeOnly: true
+        username:
+          type: string
+          minLength: 1
+        email:
+          oneOf:
+          - type: string
+            format: email
+          - type: string
+            maxLength: 0
+        password:
+          type: string
+          writeOnly: true
+          minLength: 8
+        role:
+          $ref: '#/components/schemas/RoleEnum'
+        is_active:
+          type: boolean
     PatchedTransportJobRequest:
       type: object
       properties:
@@ -10175,6 +10464,101 @@ components:
       - code
       - customer
       - name
+    TenantSettings:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        company_name:
+          type: string
+          maxLength: 200
+        customer_prefix:
+          type: string
+          maxLength: 12
+        invoice_prefix:
+          type: string
+          maxLength: 12
+        rental_prefix:
+          type: string
+          maxLength: 12
+        quote_prefix:
+          type: string
+          maxLength: 12
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - company_name
+      - created_at
+      - customer_prefix
+      - id
+      - invoice_prefix
+      - quote_prefix
+      - rental_prefix
+      - updated_at
+    TenantUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user_id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+        email:
+          oneOf:
+          - type: string
+            format: email
+          - type: string
+            maxLength: 0
+        role:
+          $ref: '#/components/schemas/RoleEnum'
+        is_active:
+          type: boolean
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        last_login:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - date_joined
+      - id
+      - last_login
+      - user_id
+    TenantUserRequest:
+      type: object
+      properties:
+        existing_user_id:
+          type: integer
+          writeOnly: true
+        username:
+          type: string
+          minLength: 1
+        email:
+          oneOf:
+          - type: string
+            format: email
+          - type: string
+            maxLength: 0
+        password:
+          type: string
+          writeOnly: true
+          minLength: 8
+        role:
+          $ref: '#/components/schemas/RoleEnum'
+        is_active:
+          type: boolean
     TransportDirectionEnum:
       enum:
       - outbound

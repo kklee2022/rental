@@ -47,10 +47,12 @@ def make_site(tenant, customer, code="SITE-1"):
         )
 
 
-def make_equipment_model(tenant, code="MODEL-1"):
+def make_equipment_model(tenant, code="MODEL-1", category_prefix=None):
     with tenant_context(tenant):
         category = EquipmentCategory.objects.create(
-            code=f"{code}-CAT", name=f"{code} Category"
+            code=f"{code}-CAT",
+            name=f"{code} Category",
+            prefix=(category_prefix or code.upper().replace("_", "-"))[:12],
         )
         return EquipmentModel.objects.create(
             category=category,

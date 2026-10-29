@@ -3,6 +3,10 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db import transaction
 
+from core.models import TenantScopedModel
+
+from .validators import validate_prefix
+
 
 class Plan(models.Model):
     """Subscription plan entitlements. Fee collection is intentionally out of scope."""
@@ -61,6 +65,45 @@ class Tenant(models.Model):
     def has_feature(self, code):
         features = self.plan.features
         return isinstance(features, list) and code in features
+
+
+class TenantSettings(TenantScopedModel):
+    customer_prefix = models.CharField(
+        max_length=12, default="C", validators=[validate_prefix]
+    )
+    invoice_prefix = models.CharField(
+        max_length=12, default="INV", validators=[validate_prefix]
+    )
+    rental_prefix = models.CharField(
+        max_length=12, default="R", validators=[validate_prefix]
+    )
+    quote_prefix = models.CharField(
+        max_length=12, default="Q", validators=[validate_prefix]
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["tenant"], name="unique_tenant_settings")
+        ]
+
+    def clean(self):
+        for field in (
+            "customer_prefix",
+            "invoice_prefix",
+            "rental_prefix",
+            "quote_prefix",
+        ):
+            value = validate_prefix(getattr(self, field))
+            setattr(self, field, value)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Settings for tenant {self.tenant_id}"
 
 
 class Role(models.TextChoices):

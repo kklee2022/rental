@@ -212,8 +212,8 @@ export default function CustomersPage() {
         {error ? <ErrorBanner>{error}</ErrorBanner> : null}
         <form className="stack-form" onSubmit={handleCreate}>
           <div className="form-grid">
-            <Field label="客戶編號">
-              <Input name="code" required />
+            <Field hint="留空則按公司設定 prefix 自動編號" label="客戶編號">
+              <Input name="code" />
             </Field>
             <Field label="客戶名稱">
               <Input name="name" required />

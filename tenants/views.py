@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -6,15 +7,18 @@ from drf_spectacular.utils import extend_schema
 
 from core.models import AuditEvent, record_audit
 
-from .models import Membership
+from .models import Membership, Role
 from .permissions import has_role
 from .serializers import (
     AccountResponseSerializer,
     AccountTenantSerializer,
     AuditEventSerializer,
     CurrentTenantResponseSerializer,
+    TenantSettingsSerializer,
+    TenantUserSerializer,
     MembershipSerializer,
 )
+from .settings_service import get_tenant_settings
 
 
 @extend_schema(
@@ -114,6 +118,8 @@ class MembershipDetailView(
         )
 
     def perform_destroy(self, instance):
+        if instance.role == Role.OWNER and self.request.membership.role != Role.OWNER:
+            raise PermissionDenied("Only an owner can remove another owner.")
         membership_id = instance.pk
         user_id = instance.user_id
         role = instance.role
@@ -134,4 +140,104 @@ class AuditEventListView(generics.ListAPIView):
     def get_queryset(self):
         return AuditEvent.objects.filter(tenant=self.request.tenant).select_related(
             "actor"
+        )
+
+
+@extend_schema(responses=TenantSettingsSerializer)
+class TenantSettingsView(APIView):
+    permission_classes = [IsAuthenticated, has_role()]
+
+    def get(self, request):
+        settings = get_tenant_settings(request.tenant)
+        return Response(
+            TenantSettingsSerializer(settings, context={"request": request}).data
+        )
+
+    @extend_schema(
+        request=TenantSettingsSerializer,
+        responses=TenantSettingsSerializer,
+    )
+    def patch(self, request):
+        settings = get_tenant_settings(request.tenant)
+        serializer = TenantSettingsSerializer(
+            settings,
+            data=request.data,
+            partial=True,
+            context={"request": request},
+        )
+        serializer.is_valid(raise_exception=True)
+        changed_fields = sorted(
+            "company_name" if field == "tenant" else field
+            for field in serializer.validated_data
+        )
+        settings = serializer.save()
+        record_audit(
+            "tenant.settings.updated",
+            actor=request.user,
+            obj=settings,
+            changed_fields=changed_fields,
+        )
+        return Response(serializer.data)
+
+
+class TenantUserQuerysetMixin:
+    def get_queryset(self):
+        return (
+            Membership.objects.filter(tenant=self.request.tenant)
+            .select_related("user", "tenant")
+            .order_by("user__username", "id")
+        )
+
+
+class TenantUserListCreateView(
+    TenantUserQuerysetMixin,
+    generics.ListCreateAPIView,
+):
+    serializer_class = TenantUserSerializer
+    permission_classes = [IsAuthenticated, has_role()]
+
+    def perform_create(self, serializer):
+        membership = serializer.save()
+        record_audit(
+            "tenant_user.created",
+            actor=self.request.user,
+            obj=membership,
+            user_id=membership.user_id,
+            role=membership.role,
+        )
+
+
+class TenantUserDetailView(
+    TenantUserQuerysetMixin,
+    generics.RetrieveUpdateDestroyAPIView,
+):
+    serializer_class = TenantUserSerializer
+    permission_classes = [IsAuthenticated, has_role()]
+
+    def perform_update(self, serializer):
+        previous = {
+            "role": serializer.instance.role,
+            "is_active": serializer.instance.is_active,
+        }
+        membership = serializer.save()
+        record_audit(
+            "tenant_user.updated",
+            actor=self.request.user,
+            obj=membership,
+            previous=previous,
+            role=membership.role,
+            is_active=membership.is_active,
+        )
+
+    def perform_destroy(self, instance):
+        if instance.role == Role.OWNER and self.request.membership.role != Role.OWNER:
+            raise PermissionDenied("Only an owner can remove another owner.")
+        membership_id = instance.pk
+        user_id = instance.user_id
+        instance.delete()
+        record_audit(
+            "tenant_user.deleted",
+            actor=self.request.user,
+            membership_id=membership_id,
+            user_id=user_id,
         )

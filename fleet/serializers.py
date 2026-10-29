@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from core.sequences import next_document_number
 
 from .models import (
     Accessory,
@@ -12,9 +13,11 @@ from .models import (
 
 
 class EquipmentCategorySerializer(serializers.ModelSerializer):
+    prefix = serializers.CharField(max_length=12)
+
     class Meta:
         model = EquipmentCategory
-        fields = ("id", "code", "name", "description")
+        fields = ("id", "code", "name", "prefix", "description")
 
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -46,6 +49,7 @@ class EquipmentModelSerializer(serializers.ModelSerializer):
 class AssetSerializer(serializers.ModelSerializer):
     model_name = serializers.CharField(source="model.name", read_only=True)
     location_name = serializers.CharField(source="location.name", read_only=True)
+    asset_number = serializers.CharField(required=False, allow_blank=True)
 
     class Meta:
         model = Asset
@@ -77,6 +81,36 @@ class AssetSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         )
+
+    def validate(self, attrs):
+        asset_number = attrs.get(
+            "asset_number", getattr(self.instance, "asset_number", "")
+        )
+        model = attrs.get("model", getattr(self.instance, "model", None))
+        if self.instance is None and not asset_number:
+            if model is None or not model.category.prefix:
+                raise serializers.ValidationError(
+                    {
+                        "asset_number": (
+                            "Asset number is required unless the equipment "
+                            "category has a prefix."
+                        )
+                    }
+                )
+        if self.instance is not None and not asset_number:
+            raise serializers.ValidationError(
+                {"asset_number": "Asset number cannot be blank."}
+            )
+        return attrs
+
+    def create(self, validated_data):
+        if not validated_data.get("asset_number"):
+            category = validated_data["model"].category
+            validated_data["asset_number"] = next_document_number(
+                f"asset:{category.code}",
+                category.prefix,
+            )
+        return super().create(validated_data)
 
 
 class AssetTransitionSerializer(serializers.Serializer):

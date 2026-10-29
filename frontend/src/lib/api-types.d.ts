@@ -1775,6 +1775,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/settings/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_settings_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["v1_settings_partial_update"];
+        trace?: never;
+    };
     "/api/v1/sites/": {
         parameters: {
             query?: never;
@@ -1827,6 +1843,38 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/api/v1/users/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_users_list"];
+        put?: never;
+        post: operations["v1_users_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/users/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1_users_retrieve"];
+        put: operations["v1_users_update"];
+        post?: never;
+        delete: operations["v1_users_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["v1_users_partial_update"];
         trace?: never;
     };
 }
@@ -1900,7 +1948,7 @@ export interface components {
             readonly model_name: string;
             location?: number | null;
             readonly location_name: string;
-            asset_number: string;
+            asset_number?: string;
             serial_number?: string;
             registration_number?: string;
             qr_code?: string;
@@ -1977,7 +2025,7 @@ export interface components {
         AssetRequest: {
             model: number;
             location?: number | null;
-            asset_number: string;
+            asset_number?: string;
             serial_number?: string;
             registration_number?: string;
             qr_code?: string;
@@ -2175,7 +2223,7 @@ export interface components {
         };
         Customer: {
             readonly id: number;
-            code: string;
+            code?: string;
             name: string;
             legal_name?: string;
             status?: components["schemas"]["CustomerStatusEnum"];
@@ -2191,7 +2239,7 @@ export interface components {
             readonly updated_at: string;
         };
         CustomerRequest: {
-            code: string;
+            code?: string;
             name: string;
             legal_name?: string;
             status?: components["schemas"]["CustomerStatusEnum"];
@@ -2296,11 +2344,13 @@ export interface components {
             readonly id: number;
             code: string;
             name: string;
+            prefix: string;
             description?: string;
         };
         EquipmentCategoryRequest: {
             code: string;
             name: string;
+            prefix: string;
             description?: string;
         };
         EquipmentModel: {
@@ -3201,6 +3251,21 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["Site"][];
         };
+        PaginatedTenantUserList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["TenantUser"][];
+        };
         PaginatedTransportJobList: {
             /** @example 123 */
             count: number;
@@ -3268,6 +3333,7 @@ export interface components {
         PatchedEquipmentCategoryRequest: {
             code?: string;
             name?: string;
+            prefix?: string;
             description?: string;
         };
         PatchedEquipmentModelRequest: {
@@ -3396,6 +3462,21 @@ export interface components {
             latitude?: string | null;
             /** Format: decimal */
             longitude?: string | null;
+        };
+        PatchedTenantSettingsRequest: {
+            company_name?: string;
+            customer_prefix?: string;
+            invoice_prefix?: string;
+            rental_prefix?: string;
+            quote_prefix?: string;
+        };
+        PatchedTenantUserRequest: {
+            existing_user_id?: number;
+            username?: string;
+            email?: string;
+            password?: string;
+            role?: components["schemas"]["RoleEnum"];
+            is_active?: boolean;
         };
         PatchedTransportJobRequest: {
             direction?: components["schemas"]["TransportDirectionEnum"];
@@ -3894,6 +3975,38 @@ export interface components {
             latitude?: string | null;
             /** Format: decimal */
             longitude?: string | null;
+        };
+        TenantSettings: {
+            readonly id: number;
+            company_name: string;
+            customer_prefix: string;
+            invoice_prefix: string;
+            rental_prefix: string;
+            quote_prefix: string;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        TenantUser: {
+            readonly id: number;
+            readonly user_id: number;
+            username?: string;
+            email?: string;
+            role?: components["schemas"]["RoleEnum"];
+            is_active?: boolean;
+            /** Format: date-time */
+            readonly date_joined: string;
+            /** Format: date-time */
+            readonly last_login: string;
+        };
+        TenantUserRequest: {
+            existing_user_id?: number;
+            username?: string;
+            email?: string;
+            password?: string;
+            role?: components["schemas"]["RoleEnum"];
+            is_active?: boolean;
         };
         /**
          * @description * `outbound` - Outbound delivery
@@ -8155,6 +8268,50 @@ export interface operations {
             };
         };
     };
+    v1_settings_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TenantSettings"];
+                };
+            };
+        };
+    };
+    v1_settings_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedTenantSettingsRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedTenantSettingsRequest"];
+                "multipart/form-data": components["schemas"]["PatchedTenantSettingsRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TenantSettings"];
+                };
+            };
+        };
+    };
     v1_sites_list: {
         parameters: {
             query?: {
@@ -8316,6 +8473,148 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CurrentTenantResponse"];
+                };
+            };
+        };
+    };
+    v1_users_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedTenantUserList"];
+                };
+            };
+        };
+    };
+    v1_users_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["TenantUserRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["TenantUserRequest"];
+                "multipart/form-data": components["schemas"]["TenantUserRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TenantUser"];
+                };
+            };
+        };
+    };
+    v1_users_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TenantUser"];
+                };
+            };
+        };
+    };
+    v1_users_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["TenantUserRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["TenantUserRequest"];
+                "multipart/form-data": components["schemas"]["TenantUserRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TenantUser"];
+                };
+            };
+        };
+    };
+    v1_users_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    v1_users_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedTenantUserRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedTenantUserRequest"];
+                "multipart/form-data": components["schemas"]["PatchedTenantUserRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TenantUser"];
                 };
             };
         };

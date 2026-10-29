@@ -11,6 +11,7 @@ import {
   Menu,
   ReceiptText,
   ScanLine,
+  Settings2,
   Truck,
   Users,
   X,
@@ -27,6 +28,7 @@ const navigation: Array<{
   label: string;
   icon: typeof LayoutDashboard;
   feature?: string;
+  roles?: string[];
 }> = [
   { href: "/", label: "總覽", icon: LayoutDashboard },
   { href: "/customers", label: "客戶", icon: Users },
@@ -41,6 +43,12 @@ const navigation: Array<{
   { href: "/quotes", label: "報價", icon: FileText },
   { href: "/orders", label: "租約", icon: ClipboardList },
   { href: "/billing", label: "帳務", icon: ReceiptText },
+  {
+    href: "/settings",
+    label: "設定",
+    icon: Settings2,
+    roles: ["owner", "admin"],
+  },
 ];
 
 const pageTitles: Record<string, string> = {
@@ -52,6 +60,7 @@ const pageTitles: Record<string, string> = {
   "/quotes": "報價管理",
   "/orders": "租約調度",
   "/billing": "營運帳務",
+  "/settings": "公司設定",
 };
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -91,9 +100,12 @@ export function AppShell({ children }: { children: ReactNode }) {
     )?.[1] ?? pageTitles["/"];
   const visibleNavigation = navigation.filter(
     (item) =>
-      !item.feature ||
-      currentTenant?.plan.features.includes(item.feature) ||
-      currentTenant === null,
+      (!item.feature ||
+        currentTenant?.plan.features.includes(item.feature) ||
+        currentTenant === null) &&
+      (!item.roles ||
+        currentTenant === null ||
+        item.roles.includes(currentTenant.role)),
   );
 
   return (

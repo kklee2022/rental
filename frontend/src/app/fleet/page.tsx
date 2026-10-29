@@ -161,6 +161,7 @@ export default function FleetPage() {
       body: {
         code: String(form.get("code")),
         name: String(form.get("name")),
+        prefix: String(form.get("prefix")),
         description: String(form.get("description") ?? ""),
       },
     });
@@ -409,7 +410,7 @@ export default function FleetPage() {
               </Select>
             </Field>
             <Field label="資產編號">
-              <Input name="asset_number" required />
+              <Input name="asset_number" placeholder="留空則按類別 prefix 自動編號" />
             </Field>
             <Field label="序號">
               <Input name="serial_number" />
@@ -492,9 +493,12 @@ export default function FleetPage() {
           <Field label="類別代碼">
             <Input name="code" required />
           </Field>
-          <Field label="類別名稱">
-            <Input name="name" required />
-          </Field>
+            <Field label="類別名稱">
+              <Input name="name" required />
+            </Field>
+            <Field hint="例如 EXC、LIFT、PWR" label="資產編號 Prefix">
+              <Input name="prefix" required />
+            </Field>
           <Field label="說明">
             <Textarea name="description" />
           </Field>

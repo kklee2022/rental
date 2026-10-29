@@ -55,6 +55,8 @@ API 支援 session 及 DRF token authentication。除 `/api/v1/me/` 外，
 - `GET|POST /api/v1/memberships/`
 - `PATCH|DELETE /api/v1/memberships/<id>/`
 - `GET /api/v1/audit-events/`
+- `GET|PATCH /api/v1/settings/`
+- `GET|POST /api/v1/users/`
 
 階段 2 租賃核心另提供：
 
@@ -84,6 +86,9 @@ OpenAPI、token authentication、營運介面功能及 runtime proxy 設計見
 階段 3 手機倉務、掃碼、離線同步、電子交收及盤點見
 [`docs/PHASE3.md`](docs/PHASE3.md)。物流功能需要方案包含
 `mobile_logistics` feature。
+
+公司名稱、文件 prefix、資產類別及用戶權限管理見
+[`docs/SETTINGS.md`](docs/SETTINGS.md)。
 
 OpenAPI contract 保存在 `docs/openapi.yaml`。更新 API 後執行：
 

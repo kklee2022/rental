@@ -10,6 +10,7 @@ from core.models import record_audit
 from core.sequences import next_document_number
 from core.serialization import json_safe
 from rentals.models import RentalOrder
+from tenants.settings_service import get_number_prefix
 
 from .models import CreditNote, Deposit, Invoice, InvoiceLine, Payment, Refund
 
@@ -66,7 +67,7 @@ def create_invoice_from_order(
         raise ValidationError({"order": "Order has no lines to invoice."})
     issue_date = timezone.localdate()
     invoice = Invoice.objects.create(
-        number=next_document_number("invoice", "INV"),
+        number=next_document_number("invoice", get_number_prefix("invoice")),
         order=order,
         invoice_type=invoice_type,
         issue_date=issue_date,

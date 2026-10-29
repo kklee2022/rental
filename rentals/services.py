@@ -11,6 +11,7 @@ from core.sequences import next_document_number
 from core.serialization import json_safe
 from fleet.models import Asset
 from pricing.services import calculate_line
+from tenants.settings_service import get_number_prefix
 
 from .models import (
     Contract,
@@ -227,7 +228,7 @@ def convert_quote_to_order(quote, *, actor):
             {"lines": "At least one time-based line is required to create an order."}
         )
     order = RentalOrder.objects.create(
-        number=next_document_number("rental_order", "R"),
+        number=next_document_number("rental_order", get_number_prefix("rental")),
         quote=quote,
         customer=quote.customer,
         site=quote.site,

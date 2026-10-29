@@ -18,6 +18,7 @@ from fleet.models import Asset
 from fleet.serializers import AssetSerializer
 from tenants.models import Role
 from tenants.permissions import HasTenantMembership
+from tenants.settings_service import get_number_prefix
 from tenants.viewsets import AuditedTenantModelViewSet
 
 from .models import (
@@ -76,7 +77,7 @@ class QuoteViewSet(AuditedTenantModelViewSet):
     @transaction.atomic
     def perform_create(self, serializer):
         quote = serializer.save(
-            number=next_document_number("quote", "Q"),
+            number=next_document_number("quote", get_number_prefix("quote")),
             created_by=self.request.user,
         )
         record_audit("quote.created", actor=self.request.user, obj=quote)

@@ -1,6 +1,7 @@
 from django.db.models import Count
 from django.utils import timezone
 from rest_framework.decorators import action
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -40,6 +41,13 @@ class FleetWriteViewSet(AuditedTenantModelViewSet):
 class EquipmentCategoryViewSet(FleetWriteViewSet):
     queryset_model = EquipmentCategory
     serializer_class = EquipmentCategorySerializer
+
+    def perform_destroy(self, instance):
+        if instance.models.exists():
+            raise ValidationError(
+                {"detail": "Category is referenced by one or more equipment models."}
+            )
+        super().perform_destroy(instance)
 
 
 class LocationViewSet(FleetWriteViewSet):

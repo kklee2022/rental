@@ -8,11 +8,15 @@ from core.models import (
     AppendOnlyTenantModel,
     TenantScopedModel,
 )
+from tenants.validators import validate_prefix
 
 
 class EquipmentCategory(TenantScopedModel):
     code = models.SlugField(max_length=40)
     name = models.CharField(max_length=120)
+    prefix = models.CharField(
+        max_length=12, blank=True, default="", validators=[validate_prefix]
+    )
     description = models.TextField(blank=True)
 
     class Meta:
@@ -21,8 +25,21 @@ class EquipmentCategory(TenantScopedModel):
             models.UniqueConstraint(
                 fields=["tenant", "code"],
                 name="unique_equipment_category_code",
-            )
+            ),
+            models.UniqueConstraint(
+                fields=["tenant", "prefix"],
+                condition=~models.Q(prefix=""),
+                name="unique_equipment_category_prefix",
+            ),
         ]
+
+    def clean(self):
+        if self.prefix:
+            self.prefix = validate_prefix(self.prefix)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name

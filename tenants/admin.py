@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Membership, Plan, Tenant
+from .models import Membership, Plan, Tenant, TenantSettings
 
 
 @admin.register(Plan)
@@ -73,6 +73,18 @@ class TenantAdmin(admin.ModelAdmin):
             obj=obj,
             previous=previous,
         )
+
+
+@admin.register(TenantSettings)
+class TenantSettingsAdmin(admin.ModelAdmin):
+    list_display = (
+        "tenant",
+        "customer_prefix",
+        "quote_prefix",
+        "rental_prefix",
+        "invoice_prefix",
+        "updated_at",
+    )
 
     def has_delete_permission(self, request, obj=None):
         return False

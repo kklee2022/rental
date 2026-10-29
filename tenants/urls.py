@@ -13,6 +13,9 @@ from .views import (
     CurrentTenantView,
     MembershipDetailView,
     MembershipListCreateView,
+    TenantSettingsView,
+    TenantUserDetailView,
+    TenantUserListCreateView,
 )
 
 urlpatterns = [
@@ -45,4 +48,11 @@ urlpatterns = [
         name="membership-detail",
     ),
     path("audit-events/", AuditEventListView.as_view(), name="audit-event-list"),
+    path("settings/", TenantSettingsView.as_view(), name="tenant-settings"),
+    path("users/", TenantUserListCreateView.as_view(), name="tenant-user-list"),
+    path(
+        "users/<int:pk>/",
+        TenantUserDetailView.as_view(),
+        name="tenant-user-detail",
+    ),
 ]

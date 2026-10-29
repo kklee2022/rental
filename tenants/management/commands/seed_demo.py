@@ -34,6 +34,7 @@ from rentals.services import (
     submit_quote,
 )
 from tenants.models import Membership, Plan, Role, Tenant
+from tenants.settings_service import get_number_prefix
 
 
 class Command(BaseCommand):
@@ -88,16 +89,24 @@ class Command(BaseCommand):
     def _seed_operations(self, tenant, owner):
         category, _ = EquipmentCategory.objects.get_or_create(
             code="earthmoving",
-            defaults={"name": "Earthmoving"},
+            defaults={"name": "Earthmoving", "prefix": "EXC"},
         )
         lifting, _ = EquipmentCategory.objects.get_or_create(
             code="lifting",
-            defaults={"name": "Lifting & access"},
+            defaults={"name": "Lifting & access", "prefix": "LIFT"},
         )
         power, _ = EquipmentCategory.objects.get_or_create(
             code="power",
-            defaults={"name": "Power & air"},
+            defaults={"name": "Power & air", "prefix": "PWR"},
         )
+        for seeded_category, prefix in (
+            (category, "EXC"),
+            (lifting, "LIFT"),
+            (power, "PWR"),
+        ):
+            if not seeded_category.prefix:
+                seeded_category.prefix = prefix
+                seeded_category.save(update_fields=["prefix"])
         yard, _ = Location.objects.get_or_create(
             code="main-yard",
             defaults={
@@ -272,7 +281,7 @@ class Command(BaseCommand):
         ).first()
         if pending_quote is None:
             pending_quote = Quote.objects.create(
-                number=next_document_number("quote", "Q"),
+                number=next_document_number("quote", get_number_prefix("quote")),
                 customer=second_customer,
                 site=second_site,
                 valid_until=timezone.localdate() + timedelta(days=10),
