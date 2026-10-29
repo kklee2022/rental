@@ -1,0 +1,105 @@
+x-app: &app
+  build:
+    context: .
+  image: machinery-rental:local
+  environment:
+    DJANGO_DEBUG: "0"
+    DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-local-compose-secret-key-change-me}
+    DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1,web}
+    DJANGO_CSRF_TRUSTED_ORIGINS: ${DJANGO_CSRF_TRUSTED_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
+    DJANGO_SECURE_COOKIES: "0"
+    POSTGRES_DB: ${POSTGRES_DB:-rental}
+    POSTGRES_USER: ${POSTGRES_USER:-rental}
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dev-only-password}
+    POSTGRES_HOST: db
+    POSTGRES_PORT: "5432"
+    REDIS_URL: redis://redis:6379/0
+    CELERY_RESULT_BACKEND: redis://redis:6379/1
+  depends_on:
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
+services:
+  web:
+    <<: *app
+    ports:
+      - "127.0.0.1:${WEB_PORT:-8000}:8000"
+    volumes:
+      - media_data:/app/media
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/ready/', timeout=3)",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  worker:
+    <<: *app
+    command: ["celery", "-A", "config.celery", "worker", "--loglevel=INFO", "--concurrency=2"]
+    volumes:
+      - media_data:/app/media
+
+  ui:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    image: machinery-rental-ui:local
+    environment:
+      DJANGO_API_URL: http://web:8000
+    ports:
+      - "127.0.0.1:${UI_PORT:-3000}:3000"
+    depends_on:
+      web:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/login/').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  db:
+    image: postgres:17-alpine
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-rental}
+      POSTGRES_USER: ${POSTGRES_USER:-rental}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dev-only-password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rental} -d ${POSTGRES_DB:-rental}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "127.0.0.1:${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  media_data:
+  postgres_data:
+  redis_data:

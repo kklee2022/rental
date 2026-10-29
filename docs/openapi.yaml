@@ -1,0 +1,7426 @@
+openapi: 3.0.3
+info:
+  title: Machinery Rental ERP API
+  version: 1.0.0
+  description: Multi-tenant machinery rental operations API. Supply an active X-Tenant
+    header for tenant-scoped endpoints.
+paths:
+  /api/v1/assets/:
+    get:
+      operationId: v1_assets_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAssetList'
+          description: ''
+    post:
+      operationId: v1_assets_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssetRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AssetRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AssetRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Asset'
+          description: ''
+  /api/v1/assets/{id}/:
+    get:
+      operationId: v1_assets_retrieve
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this asset.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Asset'
+          description: ''
+    put:
+      operationId: v1_assets_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this asset.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssetRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AssetRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AssetRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Asset'
+          description: ''
+    patch:
+      operationId: v1_assets_partial_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this asset.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAssetRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAssetRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAssetRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Asset'
+          description: ''
+    delete:
+      operationId: v1_assets_destroy
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this asset.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/assets/{id}/status-events/:
+    get:
+      operationId: v1_assets_status_events_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this asset.
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAssetStatusEventList'
+          description: ''
+  /api/v1/assets/{id}/transition/:
+    post:
+      operationId: v1_assets_transition_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this asset.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssetTransitionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AssetTransitionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AssetTransitionRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Asset'
+          description: ''
+  /api/v1/audit-events/:
+    get:
+      operationId: v1_audit_events_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAuditEventList'
+          description: ''
+  /api/v1/auth/login/:
+    post:
+      operationId: v1_auth_login_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LoginRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LoginRequestRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+          description: ''
+  /api/v1/auth/logout/:
+    post:
+      operationId: v1_auth_logout_create
+      tags:
+      - v1
+      security:
+      - sessionCookie: []
+      - bearerAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionStatusResponse'
+          description: ''
+  /api/v1/auth/session/:
+    get:
+      operationId: v1_auth_session_retrieve
+      tags:
+      - v1
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionStatusResponse'
+          description: ''
+  /api/v1/contacts/:
+    get:
+      operationId: v1_contacts_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedContactList'
+          description: ''
+    post:
+      operationId: v1_contacts_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+          description: ''
+  /api/v1/contacts/{id}/:
+    get:
+      operationId: v1_contacts_retrieve
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this contact.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+          description: ''
+    put:
+      operationId: v1_contacts_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this contact.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+          description: ''
+    patch:
+      operationId: v1_contacts_partial_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this contact.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedContactRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedContactRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedContactRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+          description: ''
+    delete:
+      operationId: v1_contacts_destroy
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this contact.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/contracts/:
+    get:
+      operationId: v1_contracts_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedContractList'
+          description: ''
+  /api/v1/contracts/{id}/:
+    get:
+      operationId: v1_contracts_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this contract.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+          description: ''
+  /api/v1/contracts/{id}/sign/:
+    post:
+      operationId: v1_contracts_sign_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this contract.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignContractRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SignContractRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SignContractRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+          description: ''
+  /api/v1/credit-notes/:
+    get:
+      operationId: v1_credit_notes_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCreditNoteList'
+          description: ''
+  /api/v1/credit-notes/{id}/:
+    get:
+      operationId: v1_credit_notes_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this credit note.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditNote'
+          description: ''
+  /api/v1/credit-notes/issue/:
+    post:
+      operationId: v1_credit_notes_issue_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditNoteCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreditNoteCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreditNoteCreateRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditNote'
+          description: ''
+  /api/v1/customers/:
+    get:
+      operationId: v1_customers_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCustomerList'
+          description: ''
+    post:
+      operationId: v1_customers_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+  /api/v1/customers/{id}/:
+    get:
+      operationId: v1_customers_retrieve
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this customer.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+    put:
+      operationId: v1_customers_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this customer.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+    patch:
+      operationId: v1_customers_partial_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this customer.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCustomerRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCustomerRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCustomerRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+    delete:
+      operationId: v1_customers_destroy
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this customer.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/deposits/:
+    get:
+      operationId: v1_deposits_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDepositList'
+          description: ''
+  /api/v1/deposits/{id}/:
+    get:
+      operationId: v1_deposits_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this deposit.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deposit'
+          description: ''
+  /api/v1/deposits/{id}/apply/:
+    post:
+      operationId: v1_deposits_apply_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this deposit.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepositApplyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DepositApplyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DepositApplyRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deposit'
+          description: ''
+  /api/v1/deposits/{id}/refund/:
+    post:
+      operationId: v1_deposits_refund_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this deposit.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillingReasonRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BillingReasonRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BillingReasonRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deposit'
+          description: ''
+  /api/v1/deposits/record/:
+    post:
+      operationId: v1_deposits_record_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepositCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DepositCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DepositCreateRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deposit'
+          description: ''
+  /api/v1/equipment-categories/:
+    get:
+      operationId: v1_equipment_categories_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEquipmentCategoryList'
+          description: ''
+    post:
+      operationId: v1_equipment_categories_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EquipmentCategoryRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EquipmentCategoryRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EquipmentCategoryRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentCategory'
+          description: ''
+  /api/v1/equipment-categories/{id}/:
+    get:
+      operationId: v1_equipment_categories_retrieve
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this equipment category.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentCategory'
+          description: ''
+    put:
+      operationId: v1_equipment_categories_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this equipment category.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EquipmentCategoryRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EquipmentCategoryRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EquipmentCategoryRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentCategory'
+          description: ''
+    patch:
+      operationId: v1_equipment_categories_partial_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this equipment category.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEquipmentCategoryRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEquipmentCategoryRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEquipmentCategoryRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentCategory'
+          description: ''
+    delete:
+      operationId: v1_equipment_categories_destroy
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this equipment category.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/equipment-models/:
+    get:
+      operationId: v1_equipment_models_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEquipmentModelList'
+          description: ''
+    post:
+      operationId: v1_equipment_models_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EquipmentModelRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EquipmentModelRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EquipmentModelRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentModel'
+          description: ''
+  /api/v1/equipment-models/{id}/:
+    get:
+      operationId: v1_equipment_models_retrieve
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this equipment model.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentModel'
+          description: ''
+    put:
+      operationId: v1_equipment_models_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this equipment model.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EquipmentModelRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EquipmentModelRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EquipmentModelRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentModel'
+          description: ''
+    patch:
+      operationId: v1_equipment_models_partial_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this equipment model.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEquipmentModelRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEquipmentModelRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEquipmentModelRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentModel'
+          description: ''
+    delete:
+      operationId: v1_equipment_models_destroy
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this equipment model.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/exports/accounting.csv:
+    get:
+      operationId: v1_exports_accounting.csv_retrieve
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+          description: ''
+  /api/v1/invoices/:
+    get:
+      operationId: v1_invoices_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedInvoiceList'
+          description: ''
+  /api/v1/invoices/{id}/:
+    get:
+      operationId: v1_invoices_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this invoice.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+          description: ''
+  /api/v1/invoices/{id}/issue/:
+    post:
+      operationId: v1_invoices_issue_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this invoice.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+          description: ''
+  /api/v1/invoices/{id}/void/:
+    post:
+      operationId: v1_invoices_void_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this invoice.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillingReasonRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BillingReasonRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BillingReasonRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+          description: ''
+  /api/v1/invoices/from-order/:
+    post:
+      operationId: v1_invoices_from_order_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceFromOrderRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/InvoiceFromOrderRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/InvoiceFromOrderRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+          description: ''
+  /api/v1/locations/:
+    get:
+      operationId: v1_locations_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLocationList'
+          description: ''
+    post:
+      operationId: v1_locations_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LocationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LocationRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+  /api/v1/locations/{id}/:
+    get:
+      operationId: v1_locations_retrieve
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this location.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+    put:
+      operationId: v1_locations_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this location.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LocationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LocationRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+    patch:
+      operationId: v1_locations_partial_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this location.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLocationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLocationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLocationRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+    delete:
+      operationId: v1_locations_destroy
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this location.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/me/:
+    get:
+      operationId: v1_me_retrieve
+      tags:
+      - v1
+      security:
+      - sessionCookie: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+          description: ''
+  /api/v1/memberships/:
+    get:
+      operationId: v1_memberships_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMembershipList'
+          description: ''
+    post:
+      operationId: v1_memberships_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MembershipRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MembershipRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Membership'
+          description: ''
+  /api/v1/memberships/{id}/:
+    get:
+      operationId: v1_memberships_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Membership'
+          description: ''
+    put:
+      operationId: v1_memberships_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MembershipRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MembershipRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Membership'
+          description: ''
+    patch:
+      operationId: v1_memberships_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMembershipRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMembershipRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMembershipRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Membership'
+          description: ''
+    delete:
+      operationId: v1_memberships_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/meter-readings/:
+    get:
+      operationId: v1_meter_readings_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMeterReadingList'
+          description: ''
+    post:
+      operationId: v1_meter_readings_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MeterReadingRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MeterReadingRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MeterReadingRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterReading'
+          description: ''
+  /api/v1/meter-readings/{id}/:
+    get:
+      operationId: v1_meter_readings_retrieve
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this meter reading.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterReading'
+          description: ''
+    put:
+      operationId: v1_meter_readings_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this meter reading.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MeterReadingRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MeterReadingRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MeterReadingRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterReading'
+          description: ''
+    patch:
+      operationId: v1_meter_readings_partial_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this meter reading.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMeterReadingRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMeterReadingRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMeterReadingRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterReading'
+          description: ''
+    delete:
+      operationId: v1_meter_readings_destroy
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this meter reading.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/payments/:
+    get:
+      operationId: v1_payments_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPaymentList'
+          description: ''
+  /api/v1/payments/{id}/:
+    get:
+      operationId: v1_payments_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this payment.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+  /api/v1/payments/record/:
+    post:
+      operationId: v1_payments_record_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PaymentCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PaymentCreateRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+  /api/v1/quote-lines/:
+    get:
+      operationId: v1_quote_lines_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedQuoteLineList'
+          description: ''
+    post:
+      operationId: v1_quote_lines_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteLineRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/QuoteLineRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/QuoteLineRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteLine'
+          description: ''
+  /api/v1/quote-lines/{id}/:
+    get:
+      operationId: v1_quote_lines_retrieve
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this quote line.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteLine'
+          description: ''
+    put:
+      operationId: v1_quote_lines_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this quote line.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteLineRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/QuoteLineRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/QuoteLineRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteLine'
+          description: ''
+    patch:
+      operationId: v1_quote_lines_partial_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this quote line.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedQuoteLineRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedQuoteLineRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedQuoteLineRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteLine'
+          description: ''
+    delete:
+      operationId: v1_quote_lines_destroy
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this quote line.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/quotes/:
+    get:
+      operationId: v1_quotes_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedQuoteList'
+          description: ''
+    post:
+      operationId: v1_quotes_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/QuoteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/QuoteRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+          description: ''
+  /api/v1/quotes/{id}/:
+    get:
+      operationId: v1_quotes_retrieve
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this quote.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+          description: ''
+    put:
+      operationId: v1_quotes_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this quote.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/QuoteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/QuoteRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+          description: ''
+    patch:
+      operationId: v1_quotes_partial_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this quote.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedQuoteRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedQuoteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedQuoteRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+          description: ''
+    delete:
+      operationId: v1_quotes_destroy
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this quote.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/quotes/{id}/approve/:
+    post:
+      operationId: v1_quotes_approve_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this quote.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+          description: ''
+  /api/v1/quotes/{id}/convert/:
+    post:
+      operationId: v1_quotes_convert_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this quote.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalOrder'
+          description: ''
+  /api/v1/quotes/{id}/reject/:
+    post:
+      operationId: v1_quotes_reject_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this quote.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReasonRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReasonRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReasonRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+          description: ''
+  /api/v1/quotes/{id}/submit/:
+    post:
+      operationId: v1_quotes_submit_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this quote.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+          description: ''
+  /api/v1/rate-components/:
+    get:
+      operationId: v1_rate_components_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRateComponentList'
+          description: ''
+    post:
+      operationId: v1_rate_components_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RateComponentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RateComponentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RateComponentRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateComponent'
+          description: ''
+  /api/v1/rate-components/{id}/:
+    get:
+      operationId: v1_rate_components_retrieve
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rate component.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateComponent'
+          description: ''
+    put:
+      operationId: v1_rate_components_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rate component.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RateComponentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RateComponentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RateComponentRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateComponent'
+          description: ''
+    patch:
+      operationId: v1_rate_components_partial_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rate component.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRateComponentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRateComponentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRateComponentRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateComponent'
+          description: ''
+    delete:
+      operationId: v1_rate_components_destroy
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rate component.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/rate-plans/:
+    get:
+      operationId: v1_rate_plans_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRatePlanList'
+          description: ''
+    post:
+      operationId: v1_rate_plans_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RatePlanRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RatePlanRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RatePlanRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatePlan'
+          description: ''
+  /api/v1/rate-plans/{id}/:
+    get:
+      operationId: v1_rate_plans_retrieve
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rate plan.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatePlan'
+          description: ''
+    put:
+      operationId: v1_rate_plans_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rate plan.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RatePlanRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RatePlanRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RatePlanRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatePlan'
+          description: ''
+    patch:
+      operationId: v1_rate_plans_partial_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rate plan.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRatePlanRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRatePlanRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRatePlanRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatePlan'
+          description: ''
+    delete:
+      operationId: v1_rate_plans_destroy
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rate plan.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/refunds/:
+    get:
+      operationId: v1_refunds_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRefundList'
+          description: ''
+  /api/v1/refunds/{id}/:
+    get:
+      operationId: v1_refunds_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this refund.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+          description: ''
+  /api/v1/refunds/record/:
+    post:
+      operationId: v1_refunds_record_create
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefundCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RefundCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RefundCreateRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+          description: ''
+  /api/v1/rental-orders/:
+    get:
+      operationId: v1_rental_orders_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRentalOrderList'
+          description: ''
+    post:
+      operationId: v1_rental_orders_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RentalOrderRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RentalOrderRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RentalOrderRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalOrder'
+          description: ''
+  /api/v1/rental-orders/{id}/:
+    get:
+      operationId: v1_rental_orders_retrieve
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rental order.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalOrder'
+          description: ''
+    put:
+      operationId: v1_rental_orders_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rental order.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RentalOrderRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RentalOrderRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RentalOrderRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalOrder'
+          description: ''
+    patch:
+      operationId: v1_rental_orders_partial_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rental order.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRentalOrderRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRentalOrderRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRentalOrderRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalOrder'
+          description: ''
+    delete:
+      operationId: v1_rental_orders_destroy
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rental order.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/rental-orders/{id}/cancel/:
+    post:
+      operationId: v1_rental_orders_cancel_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rental order.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReasonRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReasonRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReasonRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalOrder'
+          description: ''
+  /api/v1/rental-orders/{id}/confirm/:
+    post:
+      operationId: v1_rental_orders_confirm_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rental order.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalOrder'
+          description: ''
+  /api/v1/rental-orders/{id}/dispatch/:
+    post:
+      operationId: v1_rental_orders_dispatch_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rental order.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalOrder'
+          description: ''
+  /api/v1/rental-orders/{id}/issue-contract/:
+    post:
+      operationId: v1_rental_orders_issue_contract_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rental order.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+          description: ''
+  /api/v1/rental-orders/{id}/renew/:
+    post:
+      operationId: v1_rental_orders_renew_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rental order.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenewalRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RenewalRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RenewalRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalOrder'
+          description: ''
+  /api/v1/rental-orders/{id}/return_rental/:
+    post:
+      operationId: v1_rental_orders_return_rental_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this rental order.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalOrder'
+          description: ''
+  /api/v1/rental-orders/availability/:
+    get:
+      operationId: v1_rental_orders_availability_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: query
+        name: end_at
+        schema:
+          type: string
+          format: date-time
+        required: true
+      - in: query
+        name: equipment_model
+        schema:
+          type: integer
+          minimum: 1
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: start_at
+        schema:
+          type: string
+          format: date-time
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAssetList'
+          description: ''
+  /api/v1/reports/billing/:
+    get:
+      operationId: v1_reports_billing_retrieve
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingReport'
+          description: ''
+  /api/v1/reports/fleet/:
+    get:
+      operationId: v1_reports_fleet_retrieve
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FleetReport'
+          description: ''
+  /api/v1/reports/rentals/:
+    get:
+      operationId: v1_reports_rentals_retrieve
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalReport'
+          description: ''
+  /api/v1/reservations/:
+    get:
+      operationId: v1_reservations_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedReservationAllocationList'
+          description: ''
+  /api/v1/reservations/{id}/:
+    get:
+      operationId: v1_reservations_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this reservation allocation.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationAllocation'
+          description: ''
+  /api/v1/sites/:
+    get:
+      operationId: v1_sites_list
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSiteList'
+          description: ''
+    post:
+      operationId: v1_sites_create
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SiteRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SiteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SiteRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Site'
+          description: ''
+  /api/v1/sites/{id}/:
+    get:
+      operationId: v1_sites_retrieve
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this site.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Site'
+          description: ''
+    put:
+      operationId: v1_sites_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this site.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SiteRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SiteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SiteRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Site'
+          description: ''
+    patch:
+      operationId: v1_sites_partial_update
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this site.
+        required: true
+      tags:
+      - v1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSiteRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSiteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSiteRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Site'
+          description: ''
+    delete:
+      operationId: v1_sites_destroy
+      description: Tenant-bound CRUD with role checks and generic audit events.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this site.
+        required: true
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/tenant/:
+    get:
+      operationId: v1_tenant_retrieve
+      tags:
+      - v1
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - sessionCookie: []
+        tenantHeader: []
+      - bearerAuth: []
+        tenantHeader: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentTenantResponse'
+          description: ''
+components:
+  schemas:
+    AccountResponse:
+      type: object
+      properties:
+        username:
+          type: string
+        tenants:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountTenantItem'
+      required:
+      - tenants
+      - username
+    AccountTenant:
+      type: object
+      properties:
+        membership_id:
+          type: integer
+          readOnly: true
+        role:
+          $ref: '#/components/schemas/RoleEnum'
+        plan_code:
+          type: string
+          readOnly: true
+        max_assets:
+          type: integer
+          readOnly: true
+        max_users:
+          type: integer
+          readOnly: true
+        features:
+          readOnly: true
+      required:
+      - features
+      - max_assets
+      - max_users
+      - membership_id
+      - plan_code
+    AccountTenantItem:
+      type: object
+      properties:
+        slug:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+        membership:
+          $ref: '#/components/schemas/AccountTenant'
+      required:
+      - membership
+      - name
+      - slug
+      - status
+    Asset:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        model:
+          type: integer
+        model_name:
+          type: string
+          readOnly: true
+        location:
+          type: integer
+          nullable: true
+        location_name:
+          type: string
+          readOnly: true
+        asset_number:
+          type: string
+          maxLength: 80
+        serial_number:
+          type: string
+          maxLength: 120
+        registration_number:
+          type: string
+          maxLength: 60
+        qr_code:
+          type: string
+          maxLength: 120
+        status:
+          allOf:
+          - $ref: '#/components/schemas/AssetStatusEnum'
+          readOnly: true
+        status_changed_at:
+          type: string
+          format: date-time
+          readOnly: true
+        current_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        current_kilometers:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        acquired_on:
+          type: string
+          format: date
+          nullable: true
+        purchase_cost:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          nullable: true
+        notes:
+          type: string
+        created_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - asset_number
+      - created_at
+      - created_by
+      - id
+      - location_name
+      - model
+      - model_name
+      - status
+      - status_changed_at
+      - updated_at
+    AssetRequest:
+      type: object
+      properties:
+        model:
+          type: integer
+        location:
+          type: integer
+          nullable: true
+        asset_number:
+          type: string
+          minLength: 1
+          maxLength: 80
+        serial_number:
+          type: string
+          maxLength: 120
+        registration_number:
+          type: string
+          maxLength: 60
+        qr_code:
+          type: string
+          maxLength: 120
+        current_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        current_kilometers:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        acquired_on:
+          type: string
+          format: date
+          nullable: true
+        purchase_cost:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          nullable: true
+        notes:
+          type: string
+      required:
+      - asset_number
+      - model
+    AssetStatusEnum:
+      enum:
+      - available
+      - reserved
+      - preparing
+      - ready_for_dispatch
+      - in_transit
+      - on_site
+      - paused
+      - pending_collection
+      - return_inspection
+      - maintenance
+      - awaiting_parts
+      - safety_locked
+      - retired
+      - lost_write_off
+      type: string
+      description: |-
+        * `available` - Available
+        * `reserved` - Reserved
+        * `preparing` - Preparing
+        * `ready_for_dispatch` - Ready for dispatch
+        * `in_transit` - In transit
+        * `on_site` - On site
+        * `paused` - Paused
+        * `pending_collection` - Pending collection
+        * `return_inspection` - Return inspection
+        * `maintenance` - Maintenance
+        * `awaiting_parts` - Awaiting parts
+        * `safety_locked` - Safety locked
+        * `retired` - Retired
+        * `lost_write_off` - Lost / write-off pending
+    AssetStatusEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        asset:
+          type: integer
+          readOnly: true
+        from_status:
+          type: string
+          readOnly: true
+        to_status:
+          type: string
+          readOnly: true
+        reason:
+          type: string
+          readOnly: true
+        source:
+          type: string
+          readOnly: true
+        actor_username:
+          type: string
+          readOnly: true
+        metadata:
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - actor_username
+      - asset
+      - created_at
+      - from_status
+      - id
+      - metadata
+      - reason
+      - source
+      - to_status
+    AssetTransitionRequest:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/AssetStatusEnum'
+        reason:
+          type: string
+          maxLength: 240
+        source:
+          type: string
+          minLength: 1
+          default: manual
+          maxLength: 60
+      required:
+      - status
+    AuditEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        action:
+          type: string
+          readOnly: true
+        actor_username:
+          type: string
+          readOnly: true
+        object_type:
+          type: string
+          readOnly: true
+        object_id:
+          type: string
+          readOnly: true
+        detail:
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - action
+      - actor_username
+      - created_at
+      - detail
+      - id
+      - object_id
+      - object_type
+    BillingReasonRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          default: ''
+    BillingReport:
+      type: object
+      properties:
+        invoiced:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        paid:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        credits:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        outstanding:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        held_deposits:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        open_orders:
+          type: integer
+        invoice_status_counts:
+          type: object
+          additionalProperties:
+            type: integer
+      required:
+      - credits
+      - held_deposits
+      - invoice_status_counts
+      - invoiced
+      - open_orders
+      - outstanding
+      - paid
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        customer:
+          type: integer
+        customer_name:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 160
+        job_title:
+          type: string
+          maxLength: 120
+        email:
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
+        phone:
+          type: string
+          maxLength: 60
+        is_primary:
+          type: boolean
+          default: false
+        notes:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - customer
+      - customer_name
+      - id
+      - name
+    ContactRequest:
+      type: object
+      properties:
+        customer:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        job_title:
+          type: string
+          maxLength: 120
+        email:
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
+        phone:
+          type: string
+          maxLength: 60
+        is_primary:
+          type: boolean
+          default: false
+        notes:
+          type: string
+      required:
+      - customer
+      - name
+    Contract:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+          readOnly: true
+        order_number:
+          type: string
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ContractStatusEnum'
+          readOnly: true
+        current_version:
+          type: integer
+          readOnly: true
+        issued_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        signed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        signed_by_name:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractVersion'
+          readOnly: true
+      required:
+      - created_at
+      - current_version
+      - id
+      - issued_at
+      - order
+      - order_number
+      - signed_at
+      - signed_by_name
+      - status
+      - updated_at
+      - versions
+    ContractStatusEnum:
+      enum:
+      - draft
+      - issued
+      - signed
+      - void
+      type: string
+      description: |-
+        * `draft` - Draft
+        * `issued` - Issued
+        * `signed` - Signed
+        * `void` - Void
+    ContractVersion:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        contract:
+          type: integer
+          readOnly: true
+        version:
+          type: integer
+          readOnly: true
+        snapshot:
+          readOnly: true
+        content_sha256:
+          type: string
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        created_by_username:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - content_sha256
+      - contract
+      - created_at
+      - created_by
+      - created_by_username
+      - id
+      - snapshot
+      - version
+    CreditNote:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        number:
+          type: string
+          readOnly: true
+        invoice:
+          type: integer
+          readOnly: true
+        invoice_number:
+          type: string
+          readOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        tax_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        reason:
+          type: string
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/CreditNoteStatusEnum'
+          readOnly: true
+        snapshot:
+          readOnly: true
+        issued_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        issued_at:
+          type: string
+          format: date-time
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - amount
+      - created_at
+      - id
+      - invoice
+      - invoice_number
+      - issued_at
+      - issued_by
+      - number
+      - reason
+      - snapshot
+      - status
+      - tax_amount
+    CreditNoteCreateRequest:
+      type: object
+      properties:
+        invoice_id:
+          type: integer
+          minimum: 1
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        tax_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          default: '0.00'
+        reason:
+          type: string
+          default: ''
+      required:
+      - amount
+      - invoice_id
+    CreditNoteStatusEnum:
+      enum:
+      - issued
+      - void
+      type: string
+      description: |-
+        * `issued` - Issued
+        * `void` - Void
+    CurrentTenantPlan:
+      type: object
+      properties:
+        code:
+          type: string
+        max_assets:
+          type: integer
+          nullable: true
+        max_users:
+          type: integer
+          nullable: true
+        features:
+          type: array
+          items:
+            type: string
+      required:
+      - code
+      - features
+      - max_assets
+      - max_users
+    CurrentTenantResponse:
+      type: object
+      properties:
+        slug:
+          type: string
+        name:
+          type: string
+        role:
+          type: string
+        plan:
+          $ref: '#/components/schemas/CurrentTenantPlan'
+      required:
+      - name
+      - plan
+      - role
+      - slug
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        code:
+          type: string
+          maxLength: 40
+        name:
+          type: string
+          maxLength: 200
+        legal_name:
+          type: string
+          maxLength: 240
+        status:
+          $ref: '#/components/schemas/CustomerStatusEnum'
+        email:
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
+        phone:
+          type: string
+          maxLength: 60
+        billing_address:
+          type: string
+        credit_limit:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        notes:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - code
+      - created_at
+      - id
+      - name
+      - updated_at
+    CustomerRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+          maxLength: 40
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        legal_name:
+          type: string
+          maxLength: 240
+        status:
+          $ref: '#/components/schemas/CustomerStatusEnum'
+        email:
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
+        phone:
+          type: string
+          maxLength: 60
+        billing_address:
+          type: string
+        credit_limit:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        notes:
+          type: string
+      required:
+      - code
+      - name
+    CustomerStatusEnum:
+      enum:
+      - active
+      - on_hold
+      - blocked
+      type: string
+      description: |-
+        * `active` - Active
+        * `on_hold` - On hold
+        * `blocked` - Blocked
+    Deposit:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+          readOnly: true
+        order_number:
+          type: string
+          readOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/DepositStatusEnum'
+          readOnly: true
+        received_at:
+          type: string
+          format: date-time
+          readOnly: true
+        applied_to_invoice:
+          type: integer
+          readOnly: true
+          nullable: true
+        applied_invoice_number:
+          type: string
+          readOnly: true
+        note:
+          type: string
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - amount
+      - applied_invoice_number
+      - applied_to_invoice
+      - created_at
+      - created_by
+      - id
+      - note
+      - order
+      - order_number
+      - received_at
+      - status
+    DepositApplyRequest:
+      type: object
+      properties:
+        invoice_id:
+          type: integer
+          minimum: 1
+      required:
+      - invoice_id
+    DepositCreateRequest:
+      type: object
+      properties:
+        order_id:
+          type: integer
+          minimum: 1
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        received_at:
+          type: string
+          format: date-time
+        note:
+          type: string
+          default: ''
+      required:
+      - amount
+      - order_id
+    DepositStatusEnum:
+      enum:
+      - held
+      - applied
+      - refunded
+      - forfeited
+      type: string
+      description: |-
+        * `held` - Held
+        * `applied` - Applied
+        * `refunded` - Refunded
+        * `forfeited` - Forfeited
+    EquipmentCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        code:
+          type: string
+          maxLength: 40
+          pattern: ^[-a-zA-Z0-9_]+$
+        name:
+          type: string
+          maxLength: 120
+        description:
+          type: string
+      required:
+      - code
+      - id
+      - name
+    EquipmentCategoryRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+          maxLength: 40
+          pattern: ^[-a-zA-Z0-9_]+$
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        description:
+          type: string
+      required:
+      - code
+      - name
+    EquipmentModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        category:
+          type: integer
+        category_name:
+          type: string
+          readOnly: true
+        code:
+          type: string
+          maxLength: 60
+        name:
+          type: string
+          maxLength: 180
+        manufacturer:
+          type: string
+          maxLength: 120
+        model_number:
+          type: string
+          maxLength: 120
+        specifications: {}
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - category
+      - category_name
+      - code
+      - created_at
+      - id
+      - name
+    EquipmentModelRequest:
+      type: object
+      properties:
+        category:
+          type: integer
+        code:
+          type: string
+          minLength: 1
+          maxLength: 60
+        name:
+          type: string
+          minLength: 1
+          maxLength: 180
+        manufacturer:
+          type: string
+          maxLength: 120
+        model_number:
+          type: string
+          maxLength: 120
+        specifications: {}
+        is_active:
+          type: boolean
+      required:
+      - category
+      - code
+      - name
+    FleetReport:
+      type: object
+      properties:
+        total_assets:
+          type: integer
+        allocated_now:
+          type: integer
+        unavailable:
+          type: integer
+        utilization_percent:
+          type: number
+          format: double
+        status_counts:
+          type: object
+          additionalProperties:
+            type: integer
+      required:
+      - allocated_now
+      - status_counts
+      - total_assets
+      - unavailable
+      - utilization_percent
+    Invoice:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        number:
+          type: string
+          readOnly: true
+        order:
+          type: integer
+          readOnly: true
+        order_number:
+          type: string
+          readOnly: true
+        customer_name:
+          type: string
+          readOnly: true
+        invoice_type:
+          allOf:
+          - $ref: '#/components/schemas/InvoiceTypeEnum'
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/InvoiceStatusEnum'
+          readOnly: true
+        issue_date:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
+        due_date:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
+        currency:
+          type: string
+          readOnly: true
+        subtotal:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        tax_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        credit_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        amount_paid:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        balance:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        price_snapshot:
+          readOnly: true
+        issued_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        issued_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        created_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceLine'
+          readOnly: true
+      required:
+      - amount_paid
+      - balance
+      - created_at
+      - created_by
+      - credit_total
+      - currency
+      - customer_name
+      - due_date
+      - id
+      - invoice_type
+      - issue_date
+      - issued_at
+      - issued_by
+      - lines
+      - number
+      - order
+      - order_number
+      - price_snapshot
+      - status
+      - subtotal
+      - tax_total
+      - total
+      - updated_at
+    InvoiceFromOrderRequest:
+      type: object
+      properties:
+        order_id:
+          type: integer
+          minimum: 1
+        invoice_type:
+          allOf:
+          - $ref: '#/components/schemas/InvoiceTypeEnum'
+          default: final
+        due_days:
+          type: integer
+          maximum: 365
+          minimum: 0
+          default: 30
+      required:
+      - order_id
+    InvoiceLine:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        invoice:
+          type: integer
+          readOnly: true
+        rental_line:
+          type: integer
+          readOnly: true
+          nullable: true
+        description:
+          type: string
+          readOnly: true
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        tax_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        line_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        price_snapshot:
+          readOnly: true
+        sort_order:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - description
+      - id
+      - invoice
+      - line_total
+      - price_snapshot
+      - quantity
+      - rental_line
+      - sort_order
+      - tax_amount
+      - unit_price
+    InvoiceStatusEnum:
+      enum:
+      - draft
+      - issued
+      - partially_paid
+      - paid
+      - void
+      type: string
+      description: |-
+        * `draft` - Draft
+        * `issued` - Issued
+        * `partially_paid` - Partially paid
+        * `paid` - Paid
+        * `void` - Void
+    InvoiceTypeEnum:
+      enum:
+      - interim
+      - final
+      type: string
+      description: |-
+        * `interim` - Interim
+        * `final` - Final
+    LineTypeEnum:
+      enum:
+      - equipment
+      - operator
+      - delivery
+      - accessory
+      - usage
+      - site
+      - risk
+      - discount
+      type: string
+      description: |-
+        * `equipment` - Equipment
+        * `operator` - Operator
+        * `delivery` - Delivery
+        * `accessory` - Accessory
+        * `usage` - Usage
+        * `site` - Site
+        * `risk` - Risk
+        * `discount` - Discount
+    Location:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        code:
+          type: string
+          maxLength: 40
+        name:
+          type: string
+          maxLength: 160
+        location_type:
+          $ref: '#/components/schemas/LocationTypeEnum'
+        address:
+          type: string
+        is_active:
+          type: boolean
+      required:
+      - code
+      - id
+      - name
+    LocationRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+          maxLength: 40
+        name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        location_type:
+          $ref: '#/components/schemas/LocationTypeEnum'
+        address:
+          type: string
+        is_active:
+          type: boolean
+      required:
+      - code
+      - name
+    LocationTypeEnum:
+      enum:
+      - warehouse
+      - yard
+      - site
+      - repair
+      - other
+      type: string
+      description: |-
+        * `warehouse` - Warehouse
+        * `yard` - Yard
+        * `site` - Customer site
+        * `repair` - Repair location
+        * `other` - Other
+    LoginRequestRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          minLength: 1
+        password:
+          type: string
+          minLength: 1
+      required:
+      - password
+      - username
+    LoginResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+        username:
+          type: string
+        token:
+          type: string
+      required:
+      - detail
+      - token
+    Membership:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user_id:
+          type: integer
+        username:
+          type: string
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+        role:
+          $ref: '#/components/schemas/RoleEnum'
+        is_active:
+          type: boolean
+      required:
+      - email
+      - id
+      - user_id
+      - username
+    MembershipRequest:
+      type: object
+      properties:
+        user_id:
+          type: integer
+        role:
+          $ref: '#/components/schemas/RoleEnum'
+        is_active:
+          type: boolean
+      required:
+      - user_id
+    MeterReading:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        asset:
+          type: integer
+        hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        kilometers:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        recorded_at:
+          type: string
+          format: date-time
+        source:
+          $ref: '#/components/schemas/MeterSourceEnum'
+        actor:
+          type: integer
+          readOnly: true
+          nullable: true
+        actor_username:
+          type: string
+          readOnly: true
+        notes:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - actor
+      - actor_username
+      - asset
+      - created_at
+      - id
+    MeterReadingRequest:
+      type: object
+      properties:
+        asset:
+          type: integer
+        hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        kilometers:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        recorded_at:
+          type: string
+          format: date-time
+        source:
+          $ref: '#/components/schemas/MeterSourceEnum'
+        notes:
+          type: string
+      required:
+      - asset
+    MeterSourceEnum:
+      enum:
+      - manual
+      - telematics
+      - import
+      type: string
+      description: |-
+        * `manual` - Manual
+        * `telematics` - Telematics
+        * `import` - Import
+    PaginatedAssetList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Asset'
+    PaginatedAssetStatusEventList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetStatusEvent'
+    PaginatedAuditEventList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditEvent'
+    PaginatedContactList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+    PaginatedContractList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contract'
+    PaginatedCreditNoteList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditNote'
+    PaginatedCustomerList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+    PaginatedDepositList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deposit'
+    PaginatedEquipmentCategoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentCategory'
+    PaginatedEquipmentModelList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentModel'
+    PaginatedInvoiceList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Invoice'
+    PaginatedLocationList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Location'
+    PaginatedMembershipList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Membership'
+    PaginatedMeterReadingList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeterReading'
+    PaginatedPaymentList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+    PaginatedQuoteLineList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteLine'
+    PaginatedQuoteList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Quote'
+    PaginatedRateComponentList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RateComponent'
+    PaginatedRatePlanList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RatePlan'
+    PaginatedRefundList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refund'
+    PaginatedRentalOrderList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalOrder'
+    PaginatedReservationAllocationList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationAllocation'
+    PaginatedSiteList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Site'
+    PatchedAssetRequest:
+      type: object
+      properties:
+        model:
+          type: integer
+        location:
+          type: integer
+          nullable: true
+        asset_number:
+          type: string
+          minLength: 1
+          maxLength: 80
+        serial_number:
+          type: string
+          maxLength: 120
+        registration_number:
+          type: string
+          maxLength: 60
+        qr_code:
+          type: string
+          maxLength: 120
+        current_hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        current_kilometers:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        acquired_on:
+          type: string
+          format: date
+          nullable: true
+        purchase_cost:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          nullable: true
+        notes:
+          type: string
+    PatchedContactRequest:
+      type: object
+      properties:
+        customer:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        job_title:
+          type: string
+          maxLength: 120
+        email:
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
+        phone:
+          type: string
+          maxLength: 60
+        is_primary:
+          type: boolean
+          default: false
+        notes:
+          type: string
+    PatchedCustomerRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+          maxLength: 40
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        legal_name:
+          type: string
+          maxLength: 240
+        status:
+          $ref: '#/components/schemas/CustomerStatusEnum'
+        email:
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
+        phone:
+          type: string
+          maxLength: 60
+        billing_address:
+          type: string
+        credit_limit:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        notes:
+          type: string
+    PatchedEquipmentCategoryRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+          maxLength: 40
+          pattern: ^[-a-zA-Z0-9_]+$
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        description:
+          type: string
+    PatchedEquipmentModelRequest:
+      type: object
+      properties:
+        category:
+          type: integer
+        code:
+          type: string
+          minLength: 1
+          maxLength: 60
+        name:
+          type: string
+          minLength: 1
+          maxLength: 180
+        manufacturer:
+          type: string
+          maxLength: 120
+        model_number:
+          type: string
+          maxLength: 120
+        specifications: {}
+        is_active:
+          type: boolean
+    PatchedLocationRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+          maxLength: 40
+        name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        location_type:
+          $ref: '#/components/schemas/LocationTypeEnum'
+        address:
+          type: string
+        is_active:
+          type: boolean
+    PatchedMembershipRequest:
+      type: object
+      properties:
+        user_id:
+          type: integer
+        role:
+          $ref: '#/components/schemas/RoleEnum'
+        is_active:
+          type: boolean
+    PatchedMeterReadingRequest:
+      type: object
+      properties:
+        asset:
+          type: integer
+        hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        kilometers:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        recorded_at:
+          type: string
+          format: date-time
+        source:
+          $ref: '#/components/schemas/MeterSourceEnum'
+        notes:
+          type: string
+    PatchedQuoteLineRequest:
+      type: object
+      properties:
+        quote:
+          type: integer
+        line_type:
+          $ref: '#/components/schemas/LineTypeEnum'
+        description:
+          type: string
+          minLength: 1
+          maxLength: 240
+        equipment_model:
+          type: integer
+          nullable: true
+        asset:
+          type: integer
+          nullable: true
+        rate_plan:
+          type: integer
+          nullable: true
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        start_at:
+          type: string
+          format: date-time
+          nullable: true
+        end_at:
+          type: string
+          format: date-time
+          nullable: true
+        pricing_unit:
+          $ref: '#/components/schemas/RatePlanTimeUnitEnum'
+        unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          nullable: true
+        discount_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        sort_order:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+    PatchedQuoteRequest:
+      type: object
+      properties:
+        customer:
+          type: integer
+        site:
+          type: integer
+          nullable: true
+        valid_until:
+          type: string
+          format: date
+          nullable: true
+        notes:
+          type: string
+    PatchedRateComponentRequest:
+      type: object
+      properties:
+        rate_plan:
+          type: integer
+        equipment_model:
+          type: integer
+          nullable: true
+        code:
+          type: string
+          minLength: 1
+          maxLength: 50
+        name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        component_type:
+          $ref: '#/components/schemas/RateComponentTypeEnum'
+        pricing_method:
+          $ref: '#/components/schemas/RateComponentMethodEnum'
+        unit:
+          type: string
+          maxLength: 40
+        unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        included_quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        taxable:
+          type: boolean
+        sort_order:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+    PatchedRatePlanRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+          maxLength: 50
+          pattern: ^[-a-zA-Z0-9_]+$
+        name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        currency:
+          type: string
+          minLength: 1
+          maxLength: 3
+        time_unit:
+          $ref: '#/components/schemas/RatePlanTimeUnitEnum'
+        base_unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        minimum_charge:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        tax_rate:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        deposit_percentage:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        valid_from:
+          type: string
+          format: date
+          nullable: true
+        valid_to:
+          type: string
+          format: date
+          nullable: true
+        is_active:
+          type: boolean
+    PatchedRentalOrderRequest:
+      type: object
+      properties:
+        quote:
+          type: integer
+          nullable: true
+        customer:
+          type: integer
+        site:
+          type: integer
+          nullable: true
+        start_at:
+          type: string
+          format: date-time
+        end_at:
+          type: string
+          format: date-time
+        prep_buffer_minutes:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+        return_buffer_minutes:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+    PatchedSiteRequest:
+      type: object
+      properties:
+        customer:
+          type: integer
+        code:
+          type: string
+          minLength: 1
+          maxLength: 40
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        address:
+          type: string
+          minLength: 1
+        contact_name:
+          type: string
+          maxLength: 160
+        contact_phone:
+          type: string
+          maxLength: 60
+        access_notes:
+          type: string
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+    Payment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        invoice:
+          type: integer
+          readOnly: true
+        invoice_number:
+          type: string
+          readOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        method:
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodEnum'
+          readOnly: true
+        reference:
+          type: string
+          readOnly: true
+        received_at:
+          type: string
+          format: date-time
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/PaymentStatusEnum'
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        created_by_username:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - amount
+      - created_at
+      - created_by
+      - created_by_username
+      - id
+      - invoice
+      - invoice_number
+      - method
+      - received_at
+      - reference
+      - status
+    PaymentCreateRequest:
+      type: object
+      properties:
+        invoice_id:
+          type: integer
+          minimum: 1
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        method:
+          $ref: '#/components/schemas/PaymentMethodEnum'
+        reference:
+          type: string
+          maxLength: 120
+        received_at:
+          type: string
+          format: date-time
+      required:
+      - amount
+      - invoice_id
+      - method
+    PaymentMethodEnum:
+      enum:
+      - bank_transfer
+      - credit_card
+      - fps
+      - cash
+      - deposit
+      - other
+      type: string
+      description: |-
+        * `bank_transfer` - Bank transfer
+        * `credit_card` - Credit card
+        * `fps` - FPS
+        * `cash` - Cash
+        * `deposit` - Deposit
+        * `other` - Other
+    PaymentStatusEnum:
+      enum:
+      - completed
+      - refunded
+      - void
+      type: string
+      description: |-
+        * `completed` - Completed
+        * `refunded` - Refunded
+        * `void` - Void
+    Quote:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        number:
+          type: string
+          readOnly: true
+        customer:
+          type: integer
+        customer_name:
+          type: string
+          readOnly: true
+        site:
+          type: integer
+          nullable: true
+        site_name:
+          type: string
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/QuoteStatusEnum'
+          readOnly: true
+        valid_until:
+          type: string
+          format: date
+          nullable: true
+        currency:
+          type: string
+          readOnly: true
+        subtotal:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        discount_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        tax_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        deposit_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        price_snapshot:
+          readOnly: true
+        notes:
+          type: string
+        approved_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        approved_by_username:
+          type: string
+          readOnly: true
+        approved_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        rejected_reason:
+          type: string
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteLine'
+          readOnly: true
+      required:
+      - approved_at
+      - approved_by
+      - approved_by_username
+      - created_at
+      - created_by
+      - currency
+      - customer
+      - customer_name
+      - deposit_total
+      - discount_total
+      - id
+      - lines
+      - number
+      - price_snapshot
+      - rejected_reason
+      - site_name
+      - status
+      - subtotal
+      - tax_total
+      - total
+      - updated_at
+    QuoteLine:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        quote:
+          type: integer
+        line_type:
+          $ref: '#/components/schemas/LineTypeEnum'
+        description:
+          type: string
+          maxLength: 240
+        equipment_model:
+          type: integer
+          nullable: true
+        equipment_model_name:
+          type: string
+          readOnly: true
+        asset:
+          type: integer
+          nullable: true
+        asset_number:
+          type: string
+          readOnly: true
+        rate_plan:
+          type: integer
+          nullable: true
+        rate_plan_name:
+          type: string
+          readOnly: true
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        start_at:
+          type: string
+          format: date-time
+          nullable: true
+        end_at:
+          type: string
+          format: date-time
+          nullable: true
+        pricing_unit:
+          $ref: '#/components/schemas/RatePlanTimeUnitEnum'
+        unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          nullable: true
+        discount_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        line_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        tax_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        price_snapshot:
+          readOnly: true
+        sort_order:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - asset_number
+      - created_at
+      - description
+      - equipment_model_name
+      - id
+      - line_total
+      - price_snapshot
+      - quote
+      - rate_plan_name
+      - tax_amount
+      - updated_at
+    QuoteLineRequest:
+      type: object
+      properties:
+        quote:
+          type: integer
+        line_type:
+          $ref: '#/components/schemas/LineTypeEnum'
+        description:
+          type: string
+          minLength: 1
+          maxLength: 240
+        equipment_model:
+          type: integer
+          nullable: true
+        asset:
+          type: integer
+          nullable: true
+        rate_plan:
+          type: integer
+          nullable: true
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        start_at:
+          type: string
+          format: date-time
+          nullable: true
+        end_at:
+          type: string
+          format: date-time
+          nullable: true
+        pricing_unit:
+          $ref: '#/components/schemas/RatePlanTimeUnitEnum'
+        unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          nullable: true
+        discount_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        sort_order:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+      required:
+      - description
+      - quote
+    QuoteRequest:
+      type: object
+      properties:
+        customer:
+          type: integer
+        site:
+          type: integer
+          nullable: true
+        valid_until:
+          type: string
+          format: date
+          nullable: true
+        notes:
+          type: string
+      required:
+      - customer
+    QuoteStatusEnum:
+      enum:
+      - draft
+      - pending_approval
+      - approved
+      - rejected
+      - expired
+      - converted
+      type: string
+      description: |-
+        * `draft` - Draft
+        * `pending_approval` - Pending approval
+        * `approved` - Approved
+        * `rejected` - Rejected
+        * `expired` - Expired
+        * `converted` - Converted
+    RateComponent:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        rate_plan:
+          type: integer
+        equipment_model:
+          type: integer
+          nullable: true
+        code:
+          type: string
+          maxLength: 50
+        name:
+          type: string
+          maxLength: 160
+        component_type:
+          $ref: '#/components/schemas/RateComponentTypeEnum'
+        pricing_method:
+          $ref: '#/components/schemas/RateComponentMethodEnum'
+        unit:
+          type: string
+          maxLength: 40
+        unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        included_quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        taxable:
+          type: boolean
+        sort_order:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+      required:
+      - code
+      - component_type
+      - id
+      - name
+      - rate_plan
+    RateComponentMethodEnum:
+      enum:
+      - fixed
+      - per_unit
+      - percentage
+      type: string
+      description: |-
+        * `fixed` - Fixed
+        * `per_unit` - Per unit
+        * `percentage` - Percentage
+    RateComponentRequest:
+      type: object
+      properties:
+        rate_plan:
+          type: integer
+        equipment_model:
+          type: integer
+          nullable: true
+        code:
+          type: string
+          minLength: 1
+          maxLength: 50
+        name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        component_type:
+          $ref: '#/components/schemas/RateComponentTypeEnum'
+        pricing_method:
+          $ref: '#/components/schemas/RateComponentMethodEnum'
+        unit:
+          type: string
+          maxLength: 40
+        unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        included_quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        taxable:
+          type: boolean
+        sort_order:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+      required:
+      - code
+      - component_type
+      - name
+      - rate_plan
+    RateComponentTypeEnum:
+      enum:
+      - operator
+      - delivery
+      - accessory
+      - usage
+      - site
+      - risk
+      - discount
+      type: string
+      description: |-
+        * `operator` - Operator
+        * `delivery` - Delivery
+        * `accessory` - Accessory
+        * `usage` - Usage
+        * `site` - Site
+        * `risk` - Risk
+        * `discount` - Discount
+    RatePlan:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        code:
+          type: string
+          maxLength: 50
+          pattern: ^[-a-zA-Z0-9_]+$
+        name:
+          type: string
+          maxLength: 160
+        currency:
+          type: string
+          maxLength: 3
+        time_unit:
+          $ref: '#/components/schemas/RatePlanTimeUnitEnum'
+        base_unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        minimum_charge:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        tax_rate:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        deposit_percentage:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        valid_from:
+          type: string
+          format: date
+          nullable: true
+        valid_to:
+          type: string
+          format: date
+          nullable: true
+        is_active:
+          type: boolean
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/RateComponent'
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - code
+      - components
+      - created_at
+      - id
+      - name
+      - updated_at
+    RatePlanRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+          maxLength: 50
+          pattern: ^[-a-zA-Z0-9_]+$
+        name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        currency:
+          type: string
+          minLength: 1
+          maxLength: 3
+        time_unit:
+          $ref: '#/components/schemas/RatePlanTimeUnitEnum'
+        base_unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        minimum_charge:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        tax_rate:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        deposit_percentage:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        valid_from:
+          type: string
+          format: date
+          nullable: true
+        valid_to:
+          type: string
+          format: date
+          nullable: true
+        is_active:
+          type: boolean
+      required:
+      - code
+      - name
+    RatePlanTimeUnitEnum:
+      enum:
+      - hour
+      - day
+      - week
+      - month
+      - fixed
+      - per_unit
+      type: string
+      description: |-
+        * `hour` - Hour
+        * `day` - Day
+        * `week` - Week
+        * `month` - Month
+        * `fixed` - Fixed
+        * `per_unit` - Per unit
+    ReasonRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          minLength: 1
+      required:
+      - reason
+    Refund:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        payment:
+          type: integer
+          readOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        reason:
+          type: string
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/RefundStatusEnum'
+          readOnly: true
+        processed_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        processed_by_username:
+          type: string
+          readOnly: true
+        processed_at:
+          type: string
+          format: date-time
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - amount
+      - created_at
+      - id
+      - payment
+      - processed_at
+      - processed_by
+      - processed_by_username
+      - reason
+      - status
+    RefundCreateRequest:
+      type: object
+      properties:
+        payment_id:
+          type: integer
+          minimum: 1
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        reason:
+          type: string
+          minLength: 1
+      required:
+      - amount
+      - payment_id
+      - reason
+    RefundStatusEnum:
+      enum:
+      - completed
+      - void
+      type: string
+      description: |-
+        * `completed` - Completed
+        * `void` - Void
+    RenewalRequest:
+      type: object
+      properties:
+        asset:
+          type: integer
+          minimum: 1
+        start_at:
+          type: string
+          format: date-time
+        end_at:
+          type: string
+          format: date-time
+        unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+        description:
+          type: string
+          minLength: 1
+          default: Rental renewal
+          maxLength: 240
+      required:
+      - asset
+      - end_at
+      - start_at
+    RentalLine:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+          readOnly: true
+        quote_line:
+          type: integer
+          readOnly: true
+          nullable: true
+        line_type:
+          allOf:
+          - $ref: '#/components/schemas/LineTypeEnum'
+          readOnly: true
+        description:
+          type: string
+          readOnly: true
+        equipment_model:
+          type: integer
+          readOnly: true
+          nullable: true
+        asset:
+          type: integer
+          readOnly: true
+          nullable: true
+        asset_number:
+          type: string
+          readOnly: true
+        rate_plan:
+          type: integer
+          readOnly: true
+          nullable: true
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        start_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        end_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        pricing_unit:
+          allOf:
+          - $ref: '#/components/schemas/RatePlanTimeUnitEnum'
+          readOnly: true
+        unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+          nullable: true
+        discount_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        line_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        tax_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        price_snapshot:
+          readOnly: true
+        sort_order:
+          type: integer
+          readOnly: true
+        allocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationAllocation'
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - allocations
+      - asset
+      - asset_number
+      - created_at
+      - description
+      - discount_amount
+      - end_at
+      - equipment_model
+      - id
+      - line_total
+      - line_type
+      - order
+      - price_snapshot
+      - pricing_unit
+      - quantity
+      - quote_line
+      - rate_plan
+      - sort_order
+      - start_at
+      - tax_amount
+      - unit_price
+      - updated_at
+    RentalOrder:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        number:
+          type: string
+          readOnly: true
+        quote:
+          type: integer
+          nullable: true
+        customer:
+          type: integer
+        customer_name:
+          type: string
+          readOnly: true
+        site:
+          type: integer
+          nullable: true
+        site_name:
+          type: string
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/RentalOrderStatusEnum'
+          readOnly: true
+        start_at:
+          type: string
+          format: date-time
+        end_at:
+          type: string
+          format: date-time
+        prep_buffer_minutes:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+        return_buffer_minutes:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+        currency:
+          type: string
+          readOnly: true
+        subtotal:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        discount_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        tax_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        deposit_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,12}(?:\.\d{0,2})?$
+          readOnly: true
+        price_snapshot:
+          readOnly: true
+        confirmed_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        confirmed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        dispatched_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        returned_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        cancelled_reason:
+          type: string
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalLine'
+          readOnly: true
+      required:
+      - cancelled_reason
+      - confirmed_at
+      - confirmed_by
+      - created_at
+      - created_by
+      - currency
+      - customer
+      - customer_name
+      - deposit_total
+      - discount_total
+      - dispatched_at
+      - end_at
+      - id
+      - lines
+      - number
+      - price_snapshot
+      - returned_at
+      - site_name
+      - start_at
+      - status
+      - subtotal
+      - tax_total
+      - total
+      - updated_at
+    RentalOrderRequest:
+      type: object
+      properties:
+        quote:
+          type: integer
+          nullable: true
+        customer:
+          type: integer
+        site:
+          type: integer
+          nullable: true
+        start_at:
+          type: string
+          format: date-time
+        end_at:
+          type: string
+          format: date-time
+        prep_buffer_minutes:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+        return_buffer_minutes:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+      required:
+      - customer
+      - end_at
+      - start_at
+    RentalOrderStatusEnum:
+      enum:
+      - draft
+      - reserved
+      - active
+      - completed
+      - cancelled
+      type: string
+      description: |-
+        * `draft` - Draft
+        * `reserved` - Reserved
+        * `active` - Active
+        * `completed` - Completed
+        * `cancelled` - Cancelled
+    RentalReport:
+      type: object
+      properties:
+        quote_status_counts:
+          type: object
+          additionalProperties:
+            type: integer
+        order_status_counts:
+          type: object
+          additionalProperties:
+            type: integer
+        active_orders:
+          type: integer
+        upcoming_orders:
+          type: integer
+        overdue_orders:
+          type: integer
+      required:
+      - active_orders
+      - order_status_counts
+      - overdue_orders
+      - quote_status_counts
+      - upcoming_orders
+    ReservationAllocation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        rental_line:
+          type: integer
+          readOnly: true
+        asset:
+          type: integer
+          readOnly: true
+        asset_number:
+          type: string
+          readOnly: true
+        start_at:
+          type: string
+          format: date-time
+          readOnly: true
+        end_at:
+          type: string
+          format: date-time
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ReservationStatusEnum'
+          readOnly: true
+        hold_expires_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        created_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - asset
+      - asset_number
+      - created_at
+      - created_by
+      - end_at
+      - hold_expires_at
+      - id
+      - rental_line
+      - start_at
+      - status
+    ReservationStatusEnum:
+      enum:
+      - held
+      - confirmed
+      - released
+      type: string
+      description: |-
+        * `held` - Held
+        * `confirmed` - Confirmed
+        * `released` - Released
+    RoleEnum:
+      enum:
+      - owner
+      - admin
+      - rental
+      - warehouse
+      - driver
+      - technician
+      - finance
+      - viewer
+      type: string
+      description: |-
+        * `owner` - Owner
+        * `admin` - Administrator
+        * `rental` - Sales / rental
+        * `warehouse` - Warehouse / fleet
+        * `driver` - Driver
+        * `technician` - Technician
+        * `finance` - Finance
+        * `viewer` - Read-only
+    SessionStatusResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+        username:
+          type: string
+        csrf_token:
+          type: string
+      required:
+      - csrf_token
+      - detail
+    SignContractRequest:
+      type: object
+      properties:
+        signed_by_name:
+          type: string
+          minLength: 1
+          maxLength: 160
+      required:
+      - signed_by_name
+    Site:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        customer:
+          type: integer
+        code:
+          type: string
+          maxLength: 40
+        name:
+          type: string
+          maxLength: 200
+        address:
+          type: string
+        contact_name:
+          type: string
+          maxLength: 160
+        contact_phone:
+          type: string
+          maxLength: 60
+        access_notes:
+          type: string
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - address
+      - code
+      - created_at
+      - customer
+      - id
+      - name
+      - updated_at
+    SiteRequest:
+      type: object
+      properties:
+        customer:
+          type: integer
+        code:
+          type: string
+          minLength: 1
+          maxLength: 40
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        address:
+          type: string
+          minLength: 1
+        contact_name:
+          type: string
+          maxLength: 160
+        contact_phone:
+          type: string
+          maxLength: 60
+        access_notes:
+          type: string
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+        longitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          nullable: true
+      required:
+      - address
+      - code
+      - customer
+      - name
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    tenantHeader:
+      type: apiKey
+      in: header
+      name: X-Tenant
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"

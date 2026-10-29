@@ -1,0 +1,26 @@
+{
+  "name": "machinery-rental-operations",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "npm run openapi:types && next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "openapi:types": "openapi-typescript ../docs/openapi.yaml -o src/lib/api-types.d.ts"
+  },
+  "dependencies": {
+    "lucide-react": "1.63.0",
+    "next": "16.4.3",
+    "openapi-fetch": "0.17.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "openapi-typescript": "7.13.0",
+    "typescript": "5.9.3"
+  }
+}

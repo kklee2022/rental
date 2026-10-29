@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: rental
+          POSTGRES_USER: rental
+          POSTGRES_PASSWORD: test-password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U rental -d rental"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DJANGO_DEBUG: "0"
+      DJANGO_SECRET_KEY: ci-only-secret-key-with-at-least-fifty-characters-123456
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,testserver
+      POSTGRES_DB: rental
+      POSTGRES_USER: rental
+      POSTGRES_PASSWORD: test-password
+      POSTGRES_HOST: 127.0.0.1
+      POSTGRES_PORT: "5432"
+      REDIS_URL: redis://127.0.0.1:6379/0
+      CELERY_TASK_ALWAYS_EAGER: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Verify dependency set
+        run: pip check
+      - name: Django checks
+        run: python manage.py check
+      - name: Check migrations
+        run: python manage.py makemigrations --check --dry-run
+      - name: Run tests
+        run: python manage.py test --verbosity 2
+      - name: Verify Celery application
+        run: python -c "from config.celery import app; app.loader.import_default_modules(); assert 'core.tasks.record_worker_heartbeat' in app.tasks; assert 'rentals.tasks.release_expired_reservation_holds' in app.tasks"
+
+  container:
+    runs-on: ubuntu-latest
+    needs: [test, frontend]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build production images
+        run: docker compose build web ui
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+      - name: Verify generated API types and build
+        working-directory: frontend
+        run: |
+          npm run typecheck
+          npm run build
